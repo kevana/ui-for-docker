@@ -9,7 +9,7 @@ RUN apt-get update
 RUN apt-get upgrade
 
 ADD . /app/
-RUN ln -s /app/dockerui /dockerui
+RUN ln -s /app/dockerui /bin/dockerui
 
 EXPOSE 9000
 
