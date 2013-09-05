@@ -1,16 +1,19 @@
 # Dockerfile for DockerUI
 
-FROM ubuntu
+FROM ubuntu:12.04
 
-MAINTAINER Michael Crosby http://crosbymichael.com
-
-RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
 RUN apt-get update
 RUN apt-get upgrade -y
+RUN apt-get install -y apache2 
 
-ADD . /app/
+ENV APACHE_RUN_USER www-data
+ENV APACHE_RUN_GROUP www-data
+ENV APACHE_LOG_DIR /var/log/apache2
 
-EXPOSE 9000
-WORKDIR /app/
+EXPOSE 80
 
-ENTRYPOINT ["./dockerui"]
+ADD . /var/www/
+
+RUN chown www-data -R /var/www/ 
+
+CMD ["/usr/sbin/apache2", "-D", "FOREGROUND"] 
