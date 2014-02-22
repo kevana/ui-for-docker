@@ -1,2 +1,4 @@
+
+image: ubuntu:12.04
 env:
     - GOPATH=/var/cache/drone
