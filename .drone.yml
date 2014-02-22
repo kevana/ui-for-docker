@@ -1,0 +1,2 @@
+env:
+    - GOPATH=/var/cache/drone
