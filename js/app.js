@@ -12,7 +12,6 @@ angular.module('dockerui', ['ngRoute', 'dockerui.services', 'dockerui.filters'])
     }])
     // This is your docker url that the api will use to make requests
     // You need to set this to the api endpoint without the port i.e. http://192.168.1.9
-    .constant('DOCKER_ENDPOINT', '/dockerapi')
-    .constant('DOCKER_PORT', '') // Docker port, leave as an empty string if no port is requred.  If you have a port, prefix it with a ':' i.e. :4243
-    .constant('UI_VERSION', 'v0.4')
-    .constant('DOCKER_API_VERSION', 'v1.8');
+    .constant('DOCKER_ENDPOINT', 'http://192.168.56.102:4243')
+    .constant('UI_VERSION', 'v0.5')
+    .constant('DOCKER_API_VERSION', 'v1.10');
