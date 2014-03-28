@@ -1,6 +1,12 @@
 
-function MastheadController($scope) {
+function MastheadController($scope, Settings) {
     $scope.template = 'partials/masthead.html';
+    
+    // because this is a top level feature we can check for the first load and prompt for the url.
+    if (Settings.firstLoad) {
+        var url = prompt("what is the docker endpoint url?");
+        Settings.url = url;
+    }
 }
 
 function newLineChart(id, data, getkey) {
@@ -432,10 +438,6 @@ function StartContainerController($scope, $routeParams, $location, Container, Me
                 failedRequestHandler(e, Messages);
         });
     };
-}
-
-function BuilderController($scope, Dockerfile, Messages) {
-    $scope.template = '/partials/builder.html';
 }
 
 function failedRequestHandler(e, Messages) {
