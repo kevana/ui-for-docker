@@ -1,10 +1,6 @@
 ## DockerUI
 
-![Containers](/containers.png)
 DockerUI is a web interface to interact with the Remote API.  The goal is to provide a pure client side implementation so it is effortless to connect and manage docker.  This project is not complete and is still under heavy development.
-
-![Container](/container.png)
-
 
 ### Goals
 * Little to no dependencies - I really want to keep this project a pure html/js app.  I know this will have to change so that I can introduce authentication and authorization along with managing multiple docker endpoints. 
@@ -12,21 +8,17 @@ DockerUI is a web interface to interact with the Remote API.  The goal is to pro
 
 ### Container Quickstart 
 
-* Run `docker build -t crosbymichael/dockerui github.com/crosbymichael/dockerui`
-* `docker run -d -p 9000:9000 -v /var/run/docker.sock:/docker.sock crosbymichael/dockerui -e /docker.sock`
-* Open your browser to `http://<dockerd host ip>:9000`
+`docker run -d -p 9000:9000 -v /var/run/docker.sock:/docker.sock abh1nav/dockerui -e /docker.sock`
 
+OR
+
+`docker run -d -p 9000:9000 -v /var/run/docker.sock:/docker.sock abh1nav/dockerui -e="http://192.168.1.9:4243"`
+
+* Open your browser to `http://<dockerd host ip>:9000`
 
 Bind mounting the unix socket into the dockerui container is much more secure than exposing your docker 
 daemon over tcp.  You should still secure your dockerui instance behind some type of auth.  Maybe running 
 nginx infront of dockerui with basic auth.
-
-### Connect via a unix socket
-If you want to connect to docker via the unix socket you can pass the socket path to the `-e` variable.  If you are running dockerui in a container you can bind mount the unix socket into the container.
-
-```bash
-docker run -d -p 9000:9000 -v /var/run/docker.sock:/docker.sock crosbymichael/dockerui -e /docker.sock
-```
 
 ### Stack
 * Angular.js
@@ -40,7 +32,6 @@ docker run -d -p 9000:9000 -v /var/run/docker.sock:/docker.sock crosbymichael/do
 * Search
 * Push files to a container
 * Unit tests
-
 
 ### License - MIT
 The DockerUI code is licensed under the MIT license. Flatstrap(bootstrap) is licensed under the Apache License v2.0 and Angular.js is licensed under MIT.
