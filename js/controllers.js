@@ -187,6 +187,14 @@ function ContainerController($scope, $routeParams, $location, Container, Message
         });
     };
 
+    $scope.restart = function() {
+        Container.restart({id: $routeParams.id}, function(d) {
+            Messages.send("Container restarted", $routeParams.id);
+        }, function(e){
+            Messages.error("Failure", "Container failed to restart." + e.data);
+        });
+    };
+
     $scope.hasContent = function(data) {
         return data !== null && data !== undefined && data.length > 1;
     };
@@ -276,6 +284,10 @@ function ContainersController($scope, Container, Settings, Messages, ViewSpinner
 
     $scope.removeAction = function() {
         batch($scope.containers, Container.remove, "Removed");
+    };
+
+    $scope.restartAction = function() {
+        batch($scope.containers, Container.restart, "Restarted");  
     };
 
     update({all: Settings.displayAll ? 1 : 0});
