@@ -630,9 +630,11 @@ h1 {
 }
 h2 {
   font-size: 31.5px;
+  margin-top: 40px;
 }
 h3 {
   font-size: 24.5px;
+  text-align: center;
 }
 h4 {
   font-size: 17.5px;
@@ -3657,12 +3659,12 @@ ul.icons {
   display: none;
   float: left;
   min-width: 160px;
-  padding: 5px 0;
-  margin: 2px 0 0;
+  padding: 0;
+  margin: 0px 0 0;
   list-style: none;
   background-color: #ffffff;
   border: 1px solid #ccc;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid #333;
   *border-right-width: 2px;
   *border-bottom-width: 2px;
   -webkit-background-clip: padding-box;
@@ -3684,7 +3686,7 @@ ul.icons {
 }
 .dropdown-menu > li > a {
   display: block;
-  padding: 3px 20px;
+  padding: 5px 20px;
   clear: both;
   font-weight: normal;
   line-height: 20px;
@@ -3697,7 +3699,7 @@ ul.icons {
 .dropdown-submenu:focus > a {
   text-decoration: none;
   color: #ffffff;
-  background-color: #0081c2;
+  background-color: rgb(242,78,78);
 }
 .dropdown-menu > .active > a,
 .dropdown-menu > .active > a:hover,
@@ -3793,10 +3795,10 @@ ul.icons {
 }
 .well {
   min-height: 20px;
-  padding: 19px;
+  padding: 10px 20px;
   margin-bottom: 20px;
   background-color: #f5f5f5;
-  border: 1px solid #e3e3e3;
+  /* border: 1px solid #e3e3e3; */
 }
 .well blockquote {
   border-color: #ddd;
@@ -4393,7 +4395,8 @@ input[type="submit"].btn.btn-mini {
 .nav > li > a:hover,
 .nav > li > a:focus {
   text-decoration: none;
-  background-color: #eeeeee;
+  background-color: #333;
+  cursor: pointer;
 }
 .nav > li > a > img {
   max-width: none;
@@ -4467,12 +4470,15 @@ input[type="submit"].btn.btn-mini {
 .nav-tabs > li,
 .nav-pills > li {
   float: left;
+  background-color: rgb(242,78,78);
+  /* color: white; */
+  /* color: white; */
 }
 .nav-tabs > li > a,
 .nav-pills > li > a {
-  padding-right: 12px;
+  padding-right: 10px;
   padding-left: 12px;
-  margin-right: 2px;
+  margin-right: 0px;
   line-height: 14px;
 }
 .nav-tabs {
@@ -4503,8 +4509,11 @@ input[type="submit"].btn.btn-mini {
 .nav-pills > li > a {
   padding-top: 8px;
   padding-bottom: 8px;
-  margin-top: 2px;
-  margin-bottom: 2px;
+  margin-top: 0;
+  margin-bottom: 0;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
 }
 .nav-pills > .active > a,
 .nav-pills > .active > a:hover,
@@ -4536,14 +4545,14 @@ input[type="submit"].btn.btn-mini {
   margin-bottom: 1px;
 }
 .nav .dropdown-toggle .caret {
-  border-top-color: #0088cc;
-  border-bottom-color: #0088cc;
+  border-top-color: white;
+  border-bottom-color: white;
   margin-top: 6px;
 }
 .nav .dropdown-toggle:hover .caret,
 .nav .dropdown-toggle:focus .caret {
-  border-top-color: #005580;
-  border-bottom-color: #005580;
+  border-top-color: white;
+  border-bottom-color: white;
 }
 /* move down carets for tabs */
 .nav-tabs .dropdown-toggle .caret {
@@ -4566,8 +4575,8 @@ input[type="submit"].btn.btn-mini {
 .nav > li.dropdown.open.active > a:hover,
 .nav > li.dropdown.open.active > a:focus {
   color: #ffffff;
-  background-color: #999999;
-  border-color: #999999;
+  background-color: #333;
+  border-color: #333;
 }
 .nav li.dropdown.open .caret,
 .nav li.dropdown.open.active .caret,
@@ -4692,8 +4701,8 @@ input[type="submit"].btn.btn-mini {
   min-height: 40px;
   padding-left: 20px;
   padding-right: 20px;
-  background-color: #fafafa;
-  border: 1px solid #d4d4d4;
+  /* background-color: #fafafa; */
+  /* border: 1px solid #d4d4d4; */
   *zoom: 1;
 }
 .navbar-inner:before,
@@ -4860,18 +4869,20 @@ input[type="submit"].btn.btn-mini {
 .navbar .nav > li > a {
   float: none;
   padding: 10px 15px 10px;
-  color: #777777;
+  color: white;
   text-decoration: none;
-  text-shadow: 0 1px 0 #ffffff;
+  /* text-shadow: 0 1px 0 #ffffff; */
+  background-color: #333;
 }
 .navbar .nav .dropdown-toggle .caret {
   margin-top: 8px;
 }
 .navbar .nav > li > a:focus,
 .navbar .nav > li > a:hover {
-  background-color: transparent;
+  background-color: rgb(242,78,78);
   color: #333333;
   text-decoration: none;
+  color: white;
 }
 .navbar .nav > .active > a,
 .navbar .nav > .active > a:hover,
