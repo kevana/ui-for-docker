@@ -212,13 +212,13 @@ body {
   background-color: #ffffff;
 }
 a {
-  color: #0088cc;
+  color: black;
   text-decoration: none;
 }
 a:hover,
 a:focus {
-  color: #005580;
-  text-decoration: underline;
+  color: rgb(242,78,78);
+  text-decoration: none;
 }
 .img-polaroid {
   padding: 4px;
@@ -960,7 +960,7 @@ input[type="color"]:focus,
 }
 input[type="radio"],
 input[type="checkbox"] {
-  margin: 4px 0 0;
+  margin: 0;
   *margin-top: 0;
   /* IE7 */
 
@@ -1601,11 +1601,11 @@ table {
 }
 .table th,
 .table td {
-  padding: 8px;
+  padding: 8px 12px;
   line-height: 20px;
   text-align: left;
-  vertical-align: top;
-  border-top: 1px solid #dddddd;
+  vertical-align: middle;
+  border-bottom: 1px solid #dddddd;
 }
 .table th {
   font-weight: bold;
@@ -1620,6 +1620,9 @@ table {
 .table thead:first-child tr:first-child th,
 .table thead:first-child tr:first-child td {
   border-top: 0;
+  background: rgb(242,78,78);
+  color: white;
+  font-size: 14px;
 }
 .table tbody + tbody {
   border-top: 2px solid #dddddd;
@@ -1654,7 +1657,8 @@ table {
 }
 .table-striped tbody > tr:nth-child(odd) > td,
 .table-striped tbody > tr:nth-child(odd) > th {
-  background-color: #f9f9f9;
+  /* background-color: #f9f9f9; */
+  /* padding: 4px; */
 }
 .table-hover tbody tr:hover > td,
 .table-hover tbody tr:hover > th {
@@ -5603,7 +5607,7 @@ a.thumbnail:focus {
 .label,
 .badge {
   display: inline-block;
-  padding: 2px 4px;
+  padding: 10px 0;
   font-size: 11.844px;
   font-weight: bold;
   line-height: 14px;
@@ -5612,6 +5616,8 @@ a.thumbnail:focus {
   white-space: nowrap;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
   background-color: #999999;
+  width: 100%;
+  text-indent: 10px;
 }
 .badge {
   padding-left: 9px;
@@ -5647,7 +5653,7 @@ a.badge:focus {
 }
 .label-success,
 .badge-success {
-  background-color: #468847;
+  background-color: #1f9f77;
 }
 .label-success[href],
 .badge-success[href] {
@@ -5951,6 +5957,7 @@ a.badge:focus {
 }
 .pull-right {
   float: right;
+  margin: 10px;
 }
 .pull-left {
   float: left;
