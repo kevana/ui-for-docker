@@ -109,6 +109,17 @@
 
     <hr />
 
+    <div class="well well-large">
+        <ul>
+            <li ng-repeat="line in logs track by $index | filter:hasContent">
+                {{ line }}
+            </li>
+        </ul>
+    </div>
+
+    <hr />
+
+
     <div class="btn-remove">
         <button class="btn btn-large btn-block btn-primary btn-danger" ng-click="remove()">Remove Container</button>
     </div>
