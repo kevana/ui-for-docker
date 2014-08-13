@@ -26,7 +26,7 @@ func (h *UnixHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	conn, err := net.Dial("unix", h.path)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		log.Println(err)
+		log.Println("net.Dial", err)
 		return
 	}
 	c := httputil.NewClientConn(conn, nil)
@@ -34,8 +34,17 @@ func (h *UnixHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	res, err := c.Do(r)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		log.Println(err)
+		if res.StatusCode == 200 {
+			rwc, br := c.Hijack()
+			defer rwc.Close()
+			if _, err := io.Copy(w, br); err != nil {
+				log.Println(err)
+			}
+
+		} else {
+			w.WriteHeader(http.StatusInternalServerError)
+			log.Println("c.Do", err)
+		}
 		return
 	}
 	defer res.Body.Close()
