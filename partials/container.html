@@ -110,11 +110,11 @@
     <hr />
 
     <div class="well well-large">
-        <ul>
-            <li ng-repeat="line in logs track by $index | filter:hasContent">
-                {{ line }}
-            </li>
-        </ul>
+        <p>
+          <div class="{{line.stream_type | streamName }} " ng-repeat="line in logs track by $index">
+              {{ line.contents }}
+          </div>
+        </p>
     </div>
 
     <hr />

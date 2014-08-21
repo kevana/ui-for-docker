@@ -125,3 +125,11 @@ body {
     border-width: 0 0 0 1em;
     padding: 0 0.3em;
 }
+
+.stdout {
+
+}
+
+.stderr {
+    color: red;
+}

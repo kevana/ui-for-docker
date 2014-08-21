@@ -208,7 +208,7 @@ function ContainerController($scope, $routeParams, $location, Container, Message
             log_data.pop();
             log_data.pop();
             $scope.logs=log_data.join('').split("\n").map(function(line, index) {
-              return line.substr(8);
+              return {stream_type: line.charCodeAt(0), contents: line.substr(8)};
             });
         });
     };

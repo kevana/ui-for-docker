@@ -63,6 +63,20 @@ angular.module('dockerui.filters', [])
             return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[[i]]; 
         };
     })
+    .filter('streamName', function() {
+        return function(STREAM_TYPE) {
+          switch (STREAM_TYPE) {
+            case 0:
+              return 'stdin';
+            case 1:
+              return 'stdout';
+            case 2:
+              return 'stderr';
+          }
+    		  return '';
+        };
+    })
+
     .filter('containername', function() {
         return function(container) {
 			var name = container.Names[0];
