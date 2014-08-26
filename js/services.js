@@ -15,8 +15,21 @@ angular.module('dockerui.services', ['ngResource'])
             kill :{method: 'POST', params: {id: '@id', action:'kill'}},
             changes :{method: 'GET', params: {action:'changes'}, isArray: true},
             create :{method: 'POST', params: {action:'create'}},
-            remove :{method: 'DELETE', params: {id: '@id', v:0}}
+            remove :{method: 'DELETE', params: {id: '@id', v:0}},
         });
+    })
+    .factory('ContainerLogs', function($resource, $http, Settings) {
+        return {
+          'getLogs': function(id, params, callback) {
+            $http({
+              method: 'GET',
+              url: Settings.url + '/containers/'+id+'/logs',
+              params: {'stdout': params.stdout || 0, 'stderr': params.stderr || 0, 'timestamps': params.timestamps || 0, 'tail': params.tail || 'all'}
+            }).success(callback).error(function(data, status, headers, config) {
+                console.log(error, data);
+            });
+          }
+        }
     })
     .factory('Image', function($resource, Settings) {
         // Resource for docker images

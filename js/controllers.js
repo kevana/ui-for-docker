@@ -152,7 +152,7 @@ function SettingsController($scope, System, Docker, Settings, Messages) {
 }
 
 // Controls the page that displays a single container and actions on that container.
-function ContainerController($scope, $routeParams, $location, Container, Messages, ViewSpinner) {
+function ContainerController($scope, $routeParams, $location, Container, Messages, ViewSpinner, ContainerLogs) {
     $scope.changes = [];
 
     $scope.start = function(){
@@ -208,7 +208,36 @@ function ContainerController($scope, $routeParams, $location, Container, Message
         }
     });
 
-   $scope.getChanges();
+    $scope.myLogTest = function(name) {
+        return name.toUpperCase();
+    }
+
+    $scope.getChanges();
+}
+
+function ContainerLogsController($scope, $routeParams, ContainerLogs) {
+    $scope.stdout = '';
+    $scope.stderr = '';
+
+    function getLogs() {
+        console.log('called');
+        ContainerLogs.getLogs($routeParams.id, {stdout: 1, stderr: 0}, function(data, status, headers, config) {
+            $scope.stdout = data;
+        });
+        ContainerLogs.getLogs($routeParams.id, {stdout: 0, stderr: 1}, function(data, status, headers, config) {
+            $scope.stderr = data;
+        });
+    }
+
+    // initial call
+    getLogs();
+    var logIntervalId = window.setInterval(getLogs, 5000);
+
+    $scope.$on("$destroy", function(){
+        // clearing interval when view changes
+        console.log('Interval cleared')
+        clearInterval(logIntervalId);
+    });
 }
 
 // Controller for the list of containers
