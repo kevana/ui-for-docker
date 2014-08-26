@@ -211,7 +211,7 @@ function ContainerController($scope, $routeParams, $location, Container, Message
     $scope.getChanges();
 }
 
-function ContainerLogsController($scope, $routeParams, ContainerLogs) {
+function ContainerLogsController($scope, $routeParams, $location, $anchorScroll, ContainerLogs) {
     $scope.stdout = '';
     $scope.stderr = '';
 
@@ -231,9 +231,13 @@ function ContainerLogsController($scope, $routeParams, ContainerLogs) {
 
     $scope.$on("$destroy", function(){
         // clearing interval when view changes
-        console.log('Interval cleared')
         clearInterval(logIntervalId);
     });
+
+    $scope.scrollTo = function(id) {
+        $location.hash(id);
+        $anchorScroll();
+    }
 }
 
 // Controller for the list of containers
