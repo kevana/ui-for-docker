@@ -109,12 +109,10 @@
 
     <hr />
 
-    <div class="well well-large">
-        <p>
-          <div class="{{line.stream_type | streamName }} " ng-repeat="line in logs track by $index">
-              {{ line.contents }}
-          </div>
-        </p>
+    <div class="well well-large log">
+        <div class="{{line.stream_type | streamName }} " ng-repeat="line in logs track by $index">
+          <div ng-bind-html="line.contents | ansi_to_html"></div>
+        </div>
     </div>
 
     <hr />

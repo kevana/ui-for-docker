@@ -76,7 +76,11 @@ angular.module('dockerui.filters', [])
     		  return '';
         };
     })
-
+    .filter('ansi_to_html', ['$sce', function($sce){
+        return function(txt) {
+    		  return $sce.trustAsHtml(ansi_up.ansi_to_html(txt));
+        };
+    }])
     .filter('containername', function() {
         return function(container) {
 			var name = container.Names[0];

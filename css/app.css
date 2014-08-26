@@ -127,9 +127,9 @@ body {
 }
 
 .stdout {
-
+  font-family: monospace;
 }
 
 .stderr {
-    color: red;
+  font-family: monospace;
 }
