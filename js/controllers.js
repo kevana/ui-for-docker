@@ -152,7 +152,7 @@ function SettingsController($scope, System, Docker, Settings, Messages) {
 }
 
 // Controls the page that displays a single container and actions on that container.
-function ContainerController($scope, $routeParams, $location, Container, Messages, ViewSpinner, ContainerLogs) {
+function ContainerController($scope, $routeParams, $location, Container, Messages, ViewSpinner) {
     $scope.changes = [];
 
     $scope.start = function(){
@@ -207,10 +207,6 @@ function ContainerController($scope, $routeParams, $location, Container, Message
             Messages.error("Failure", e.data);
         }
     });
-
-    $scope.myLogTest = function(name) {
-        return name.toUpperCase();
-    }
 
     $scope.getChanges();
 }

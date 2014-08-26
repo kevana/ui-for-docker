@@ -15,7 +15,7 @@ angular.module('dockerui.services', ['ngResource'])
             kill :{method: 'POST', params: {id: '@id', action:'kill'}},
             changes :{method: 'GET', params: {action:'changes'}, isArray: true},
             create :{method: 'POST', params: {action:'create'}},
-            remove :{method: 'DELETE', params: {id: '@id', v:0}},
+            remove :{method: 'DELETE', params: {id: '@id', v:0}}
         });
     })
     .factory('ContainerLogs', function($resource, $http, Settings) {
