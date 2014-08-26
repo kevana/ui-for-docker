@@ -1,4 +1,4 @@
-
+/* global $, console, angular, legend, ContainerViewModel, Chart, ImageViewModel */
 function MastheadController($scope) {
     $scope.template = 'partials/masthead.html';
 }
@@ -6,8 +6,9 @@ function MastheadController($scope) {
 function newLineChart(id, data, getkey) {
     var chart = getChart(id);
     var map = {};
+    var i = 0;
 
-    for (var i = 0; i < data.length; i++) {
+    for (i = 0; i < data.length; i++) {
         var c = data[i];
         var key = getkey(c);
         
@@ -20,10 +21,10 @@ function newLineChart(id, data, getkey) {
     }
 
     var labels = [];
-    var data = [];
+    data = [];
     var keys = Object.keys(map);
 
-    for (var i = keys.length - 1; i > -1; i--) {
+    for (i = keys.length - 1; i > -1; i--) {
         var k = keys[i];
         labels.push(k);
         data.push(map[k]);
@@ -75,7 +76,7 @@ function DashboardController($scope, Container, Image, Settings) {
     }
    
     Container.query({all: 1}, function(d) {
-       var running = 0
+       var running = 0;
        var ghost = 0;
        var stopped = 0;
 
@@ -154,6 +155,7 @@ function SettingsController($scope, System, Docker, Settings, Messages) {
 // Controls the page that displays a single container and actions on that container.
 function ContainerController($scope, $routeParams, $location, Container, Messages, ViewSpinner) {
     $scope.changes = [];
+    $scope.logs = [];
 
     $scope.start = function(){
         Container.start({id: $routeParams.id}, function(d) {
@@ -197,6 +199,20 @@ function ContainerController($scope, $routeParams, $location, Container, Message
         });
     };
 
+    $scope.getLogs = function() {
+        Container.logs({id: $routeParams.id}, function(d) {
+            var log_data = Object.keys(d).map(function(key) {
+              return d[key];
+            });
+            log_data.pop();
+            log_data.pop();
+            log_data.pop();
+            $scope.logs=log_data.join('').split("\n").map(function(line, index) {
+              return {stream_type: line.charCodeAt(0), contents: line.substr(8)};
+            });
+        });
+    };
+
     Container.get({id: $routeParams.id}, function(d) {
         $scope.container = d;
     }, function(e) {
@@ -209,6 +225,7 @@ function ContainerController($scope, $routeParams, $location, Container, Message
     });
 
    $scope.getChanges();
+   $scope.getLogs();
 }
 
 // Controller for the list of containers
@@ -220,8 +237,8 @@ function ContainersController($scope, Container, Settings, Messages, ViewSpinner
     var update = function(data) {
         ViewSpinner.spin();
         Container.query(data, function(d) {
-            $scope.containers = d.map(function(item) { 
-            	return new ContainerViewModel(item); });
+            $scope.containers = d.map(function(item) {
+              return new ContainerViewModel(item); });
             ViewSpinner.stop();
         });
     };

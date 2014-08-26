@@ -1,3 +1,4 @@
+/* global $, angular, Spinner */
 'use strict';
 
 angular.module('dockerui.services', ['ngResource'])
@@ -5,7 +6,7 @@ angular.module('dockerui.services', ['ngResource'])
         // Resource for interacting with the docker containers
         // http://docs.docker.io/en/latest/api/docker_remote_api.html#containers
         return $resource(Settings.url + '/containers/:id/:action', {
-        	name: '@name'
+          name: '@name'
         }, {
             query: {method: 'GET', params:{ all: 0, action: 'json'}, isArray: true},
             get :{method: 'GET', params: { action:'json'}},
@@ -15,6 +16,7 @@ angular.module('dockerui.services', ['ngResource'])
             kill :{method: 'POST', params: {id: '@id', action:'kill'}},
             changes :{method: 'GET', params: {action:'changes'}, isArray: true},
             create :{method: 'POST', params: {action:'create'}},
+            logs :{method: 'POST', params: {id: '@id', action:'attach', logs: true, stdout: true, stderr: true}},
             remove :{method: 'DELETE', params: {id: '@id', v:0}}
         });
     })

@@ -109,6 +109,15 @@
 
     <hr />
 
+    <div class="well well-large log">
+        <div class="{{line.stream_type | streamName }} " ng-repeat="line in logs track by $index">
+          <div ng-bind-html="line.contents | ansi_to_html"></div>
+        </div>
+    </div>
+
+    <hr />
+
+
     <div class="btn-remove">
         <button class="btn btn-large btn-block btn-primary btn-danger" ng-click="remove()">Remove Container</button>
     </div>
