@@ -1,0 +1,7 @@
+{
+    "id": "ubuntu",
+    "addr": "192.168.56.101:2375",
+    "cpus": 4,
+    "memory": 2000,
+    "labels": ["home"]
+}

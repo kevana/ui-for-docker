@@ -1,100 +1,99 @@
 package main
 
 import (
-	"flag"
-	"io"
+	"encoding/json"
 	"log"
-	"net"
 	"net/http"
-	"net/http/httputil"
-	"net/url"
 	"os"
-	"strings"
+
+	"github.com/Sirupsen/logrus"
+	"github.com/citadel/citadel/cluster"
+	"github.com/citadel/citadel/scheduler"
+	"github.com/codegangsta/cli"
+	"github.com/gorilla/mux"
 )
 
 var (
-	endpoint = flag.String("e", "/var/run/docker.sock", "Dockerd endpoint")
-	addr     = flag.String("p", ":9000", "Address and port to serve dockerui")
-	assets   = flag.String("a", ".", "Path to the assets")
+	manager *cluster.Cluster
+	logger  = logrus.New()
 )
 
-type UnixHandler struct {
-	path string
+func createAPIHandler() http.Handler {
+	r := mux.NewRouter()
+
+	r.HandleFunc("/engines", engines).Methods("GET")
+	r.HandleFunc("/engines", enginesAdd).Methods("POST")
+	r.HandleFunc("/engines", enginesRemove).Methods("DELETE")
+
+	r.HandleFunc("/containers", containers).Methods("GET")
+
+	return r
 }
 
-func (h *UnixHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	conn, err := net.Dial("unix", h.path)
+func containers(w http.ResponseWriter, r *http.Request) {
+	containers, err := manager.ListContainers()
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		log.Println(err)
+		logger.WithField("error", err).Error("list containers")
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+
 		return
 	}
-	c := httputil.NewClientConn(conn, nil)
-	defer c.Close()
 
-	res, err := c.Do(r)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		log.Println(err)
-		return
-	}
-	defer res.Body.Close()
-
-	copyHeader(w.Header(), res.Header)
-	if _, err := io.Copy(w, res.Body); err != nil {
+	w.Header().Set("content-type", "application/json")
+	if err := json.NewEncoder(w).Encode(containers); err != nil {
 		log.Println(err)
 	}
 }
 
-func copyHeader(dst, src http.Header) {
-	for k, vv := range src {
-		for _, v := range vv {
-			dst.Add(k, v)
-		}
-	}
-}
-
-func createTcpHandler(e string) http.Handler {
-	u, err := url.Parse(e)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return httputil.NewSingleHostReverseProxy(u)
-}
-
-func createUnixHandler(e string) http.Handler {
-	return &UnixHandler{e}
-}
-
-func createHandler(dir string, e string) http.Handler {
+func createHandler(dir string) http.Handler {
 	var (
 		mux         = http.NewServeMux()
 		fileHandler = http.FileServer(http.Dir(dir))
-		h           http.Handler
 	)
 
-	if strings.Contains(e, "http") {
-		h = createTcpHandler(e)
-	} else {
-		if _, err := os.Stat(e); err != nil {
-			if os.IsNotExist(err) {
-				log.Fatalf("unix socket %s does not exist", e)
-			}
-			log.Fatal(err)
-		}
-		h = createUnixHandler(e)
-	}
-
-	mux.Handle("/dockerapi/", http.StripPrefix("/dockerapi", h))
+	mux.Handle("/api/", http.StripPrefix("/api", createAPIHandler()))
 	mux.Handle("/", fileHandler)
+
 	return mux
 }
 
 func main() {
-	flag.Parse()
+	app := cli.NewApp()
+	app.Name = "dockerui"
+	app.Email = "crosbymichael@gmail.com"
+	app.Author = "@crosbymichael"
+	app.Version = "2"
 
-	handler := createHandler(*assets, *endpoint)
-	if err := http.ListenAndServe(*addr, handler); err != nil {
-		log.Fatal(err)
+	app.Flags = []cli.Flag{
+		cli.StringFlag{Name: "addr", Value: ":9000", Usage: "address to serve the REST API"},
+		cli.StringFlag{Name: "assets,a", Value: ".", Usage: "path to the assets directory"},
+		cli.BoolFlag{Name: "debug", Usage: "enable debug output in logs"},
+	}
+
+	app.Before = func(context *cli.Context) error {
+		if context.GlobalBool("debug") {
+			logger.Level = logrus.DebugLevel
+		}
+
+		return nil
+	}
+
+	app.Action = func(context *cli.Context) {
+		var (
+			err     error
+			handler = createHandler(context.GlobalString("assets"))
+		)
+
+		if manager, err = cluster.New(scheduler.NewResourceManager()); err != nil {
+			logger.Fatal(err)
+		}
+
+		if err := http.ListenAndServe(context.GlobalString("addr"), handler); err != nil {
+			logger.Fatal(err)
+		}
+	}
+
+	if err := app.Run(os.Args); err != nil {
+		logger.Fatal(err)
 	}
 }
