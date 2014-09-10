@@ -8,11 +8,17 @@ DockerUI is a web interface to interact with the Remote API.  The goal is to pro
 
 ### Container Quickstart 
 
-`docker run -d -p 9000:9000 -v /var/run/docker.sock:/docker.sock abh1nav/dockerui -e /docker.sock`
+```
+docker run -d -p 9000:9000 -v /var/run/docker.sock:/docker.sock \
+--name dockerui abh1nav/dockerui:latest -e /docker.sock
+```
 
 OR
 
-`docker run -d -p 9000:9000 -v /var/run/docker.sock:/docker.sock abh1nav/dockerui -e="http://192.168.1.9:4243"`
+```
+docker run -d -p 9000:9000 --name dockerui \
+abh1nav/dockerui:latest -e="http://192.168.1.9:4243"
+```
 
 * Open your browser to `http://<dockerd host ip>:9000`
 
@@ -26,7 +32,6 @@ nginx infront of dockerui with basic auth.
 * Spin.js
 * Ace editor
 
-
 ### Todo:
 * Full repository support
 * Search
@@ -36,9 +41,12 @@ nginx infront of dockerui with basic auth.
 ### License - MIT
 The DockerUI code is licensed under the MIT license. Flatstrap(bootstrap) is licensed under the Apache License v2.0 and Angular.js is licensed under MIT.
 
-
 **DockerUI:**
 Copyright (c) 2013 Michael Crosby. crosbymichael.com
+
+Update credits:
+Abhinav Ajgaonkar blog.abhinav.ca
+Ryan Krieg ryankrieg.com
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation 
