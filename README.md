@@ -2,41 +2,26 @@
 
 DockerUI is a web interface to interact with the Remote API.  The goal is to provide a pure client side implementation so it is effortless to connect and manage docker.  This project is not complete and is still under heavy development.
 
-### Goals
-* Little to no dependencies - I really want to keep this project a pure html/js app.  I know this will have to change so that I can introduce authentication and authorization along with managing multiple docker endpoints. 
-* Consistency - The web UI should be consistent with the commands found on the docker CLI.
-
-### Container Quickstart 
+### Quickstart 
 
 ```
 docker run -d -p 9000:9000 -v /var/run/docker.sock:/docker.sock \
---name dockerui -e /docker.sock abh1nav/dockerui:latest
+--name dockerui abh1nav/dockerui:latest -e /docker.sock
 ```
 
 OR
 
 ```
-docker run -d -p 9000:9000 --name dockerui -e="http://192.168.1.9:4243" \
-abh1nav/dockerui:latest
+docker run -d -p 9000:9000 --name dockerui \
+abh1nav/dockerui:latest -e="http://192.168.1.9:4243"
 ```
 
-* Open your browser to `http://<dockerd host ip>:9000`
+..and then open your browser to `http://<dockerd host ip>:9000`
 
-Bind mounting the unix socket into the dockerui container is much more secure than exposing your docker 
-daemon over tcp.  You should still secure your dockerui instance behind some type of auth.  Maybe running 
-nginx infront of dockerui with basic auth.
-
-### Stack
-* Angular.js
-* Flatstrap ( Flat Twitter Bootstrap )
-* Spin.js
-* Ace editor
-
-### Todo:
-* Full repository support
-* Search
-* Push files to a container
-* Unit tests
+#### Warning
+Bind mounting the unix socket into the DockerUI container is much more secure than exposing your docker 
+daemon over TCP. You should still secure your DockerUI instance behind some type of auth.  Maybe running 
+Nginx infront of DockerUI with basic auth.
 
 ### Screenshots
   
@@ -50,15 +35,31 @@ nginx infront of dockerui with basic auth.
 
 ![Images](http://static.abhinav.ca/dockerui/dockerui-images.png)
 
+### Goals
+* Little to no dependencies - I really want to keep this project a pure html/js app.  I know this will have to change so that I can introduce authentication and authorization along with managing multiple docker endpoints. 
+* Consistency - The web UI should be consistent with the commands found on the docker CLI.
+
+### Stack
+* Angular.js
+* Flatstrap
+* Spin.js
+* Ace editor
+
+### Todo:
+* Full repository support
+* Search
+* Push files to a container
+* Unit tests
+
 ### License - MIT
-The DockerUI code is licensed under the MIT license. Flatstrap(bootstrap) is licensed under the Apache License v2.0 and Angular.js is licensed under MIT.
+The DockerUI code is licensed under the MIT license. Flatstrap (bootstrap) is licensed under the Apache License v2.0 and Angular.js is licensed under MIT.
 
 **DockerUI:**
-Copyright (c) 2013 Michael Crosby. crosbymichael.com
+Copyright (c) 2013 Michael Crosby. http://crosbymichael.com
 
 Update credits:
-Abhinav Ajgaonkar blog.abhinav.ca
-Ryan Krieg ryankrieg.com
+Abhinav Ajgaonkar http://blog.abhinav.ca
+Ryan Krieg http://ryankrieg.com
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation 
