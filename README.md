@@ -5,33 +5,36 @@ DockerUI is a web interface to interact with the Remote API.  The goal is to pro
 ### Quickstart 
 
 #### Step 1
-
-Pull the latest image:
+  
+Pull the latest image:  
+  
 ```
 docker pull abh1nav/dockerui:latest
 ```
   
 #### Step 2
-If you're running Docker using a unix socket (default):
+If you're running Docker using a unix socket (default):  
+  
 ```
 docker run -d -p 9000:9000 -v /var/run/docker.sock:/docker.sock \
 --name dockerui abh1nav/dockerui:latest -e="/docker.sock"
 ```
   
-If you're running Docker over tcp:
+If you're running Docker over tcp:  
+  
 ```
 docker run -d -p 9000:9000 --name dockerui \
 abh1nav/dockerui:latest -e="http://<dockerd host ip>:4243"
 ```
   
 #### Step 3
-Open your browser to `http://<dockerd host ip>:9000`
-
+Open your browser to `http://<dockerd host ip>:9000`  
+  
 #### Warning
 Bind mounting the unix socket into the DockerUI container is much more secure than exposing your docker 
 daemon over TCP. You should still secure your DockerUI instance behind some type of auth.  Maybe running 
-Nginx infront of DockerUI with basic auth.
-
+Nginx infront of DockerUI with basic auth.  
+  
 ### Screenshots
   
 ![Dashboard](http://static.abhinav.ca/dockerui/dockerui-dashboard.png)
@@ -64,9 +67,9 @@ Nginx infront of DockerUI with basic auth.
 The DockerUI code is licensed under the MIT license. Flatstrap (bootstrap) is licensed under the Apache License v2.0 and Angular.js is licensed under MIT.
 
 **DockerUI:**
-Copyright (c) 2013 Michael Crosby. http://crosbymichael.com
+Copyright (c) 2013 Michael Crosby. http://crosbymichael.com  
   
-Update credits:
+Update credits:  
 Abhinav Ajgaonkar http://blog.abhinav.ca  
 Ryan Krieg http://ryankrieg.com  
   
@@ -77,10 +80,10 @@ restriction, including without limitation the rights to use, copy,
 modify, merge, publish, distribute, sublicense, and/or sell copies 
 of the Software, and to permit persons to whom the Software is 
 furnished to do so, subject to the following conditions:
-
+  
 The above copyright notice and this permission notice shall be 
 included in all copies or substantial portions of the Software.
-
+  
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 EXPRESS OR IMPLIED,
 INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
