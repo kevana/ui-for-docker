@@ -10,14 +10,14 @@ DockerUI is a web interface to interact with the Remote API.  The goal is to pro
 
 ```
 docker run -d -p 9000:9000 -v /var/run/docker.sock:/docker.sock \
---name dockerui abh1nav/dockerui:latest -e /docker.sock
+--name dockerui -e /docker.sock abh1nav/dockerui:latest
 ```
 
 OR
 
 ```
-docker run -d -p 9000:9000 --name dockerui \
-abh1nav/dockerui:latest -e="http://192.168.1.9:4243"
+docker run -d -p 9000:9000 --name dockerui -e="http://192.168.1.9:4243" \
+abh1nav/dockerui:latest
 ```
 
 * Open your browser to `http://<dockerd host ip>:9000`
