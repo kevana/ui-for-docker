@@ -1,8 +1,6 @@
 package main
 
 import (
-	"encoding/json"
-	"log"
 	"net/http"
 	"os"
 
@@ -28,21 +26,6 @@ func createAPIHandler() http.Handler {
 	r.HandleFunc("/containers", containers).Methods("GET")
 
 	return r
-}
-
-func containers(w http.ResponseWriter, r *http.Request) {
-	containers, err := manager.ListContainers()
-	if err != nil {
-		logger.WithField("error", err).Error("list containers")
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-
-		return
-	}
-
-	w.Header().Set("content-type", "application/json")
-	if err := json.NewEncoder(w).Encode(containers); err != nil {
-		log.Println(err)
-	}
 }
 
 func createHandler(dir string) http.Handler {
