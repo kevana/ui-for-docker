@@ -4,19 +4,28 @@ DockerUI is a web interface to interact with the Remote API.  The goal is to pro
 
 ### Quickstart 
 
+#### Step 1
+
+Pull the latest image:
+```
+docker pull abh1nav/dockerui:latest
+```
+  
+#### Step 2
+If you're running Docker using a unix socket (default):
 ```
 docker run -d -p 9000:9000 -v /var/run/docker.sock:/docker.sock \
---name dockerui abh1nav/dockerui:latest -e /docker.sock
+--name dockerui abh1nav/dockerui:latest -e="/docker.sock"
 ```
-
-OR
-
+  
+If you're running Docker over tcp:
 ```
 docker run -d -p 9000:9000 --name dockerui \
-abh1nav/dockerui:latest -e="http://192.168.1.9:4243"
+abh1nav/dockerui:latest -e="http://<dockerd host ip>:4243"
 ```
-
-..and then open your browser to `http://<dockerd host ip>:9000`
+  
+#### Step 3
+Open your browser to `http://<dockerd host ip>:9000`
 
 #### Warning
 Bind mounting the unix socket into the DockerUI container is much more secure than exposing your docker 
@@ -56,11 +65,11 @@ The DockerUI code is licensed under the MIT license. Flatstrap (bootstrap) is li
 
 **DockerUI:**
 Copyright (c) 2013 Michael Crosby. http://crosbymichael.com
-
+  
 Update credits:
-Abhinav Ajgaonkar http://blog.abhinav.ca
-Ryan Krieg http://ryankrieg.com
-
+Abhinav Ajgaonkar http://blog.abhinav.ca  
+Ryan Krieg http://ryankrieg.com  
+  
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation 
 files (the "Software"), to deal in the Software without 
