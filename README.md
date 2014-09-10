@@ -38,6 +38,18 @@ nginx infront of dockerui with basic auth.
 * Push files to a container
 * Unit tests
 
+### Screenshots
+  
+![Dashboard](http://static.abhinav.ca/dockerui/dockerui-dashboard.png)
+  
+![Containers](http://static.abhinav.ca/dockerui/dockerui-containers.png)
+  
+![Container Details](http://static.abhinav.ca/dockerui/dockerui-container.png)
+  
+![Pretty Graphs](http://static.abhinav.ca/dockerui/dockerui-analytics.png)
+
+![Images](http://static.abhinav.ca/dockerui/dockerui-images.png)
+
 ### License - MIT
 The DockerUI code is licensed under the MIT license. Flatstrap(bootstrap) is licensed under the Apache License v2.0 and Angular.js is licensed under MIT.
 
