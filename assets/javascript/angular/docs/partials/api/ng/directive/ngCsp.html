@@ -1,0 +1,77 @@
+<a href='http://github.com/angular/angular.js/edit/master/src/ng/directive/ngCsp.js' class='improve-docs btn btn-primary'><i class="glyphicon glyphicon-edit">&nbsp;</i>Improve this doc</a>
+
+
+
+<a href='http://github.com/angular/angular.js/tree/master/src/ng/directive/ngCsp.js#L3' class='view-source pull-right btn btn-primary'>
+  <i class="glyphicon glyphicon-zoom-in">&nbsp;</i>View Source
+</a>
+
+
+<header class="api-profile-header">
+  <h1 class="api-profile-header-heading">ngCsp</h1>
+  <ol class="api-profile-header-structure naked-list step-list">
+    
+    <li>
+      - directive in module <a href="api/ng">ng</a>
+    </li>
+  </ol>
+</header>
+
+
+
+<div class="api-profile-description">
+  <p>Enables <a href="https://developer.mozilla.org/en/Security/CSP">CSP (Content Security Policy)</a> support.</p>
+<p>This is necessary when developing things like Google Chrome Extensions.</p>
+<p>CSP forbids apps to use <code>eval</code> or <code>Function(string)</code> generated functions (among other things).
+For us to be compatible, we just need to implement the &quot;getterFn&quot; in $parse without violating
+any of these restrictions.</p>
+<p>AngularJS uses <code>Function(string)</code> generated functions as a speed optimization. Applying the <code>ngCsp</code>
+directive will cause Angular to use CSP compatibility mode. When this mode is on AngularJS will
+evaluate all expressions up to 30% slower than in non-CSP mode, but no security violations will
+be raised.</p>
+<p>CSP forbids JavaScript to inline stylesheet rules. In non CSP mode Angular automatically
+includes some CSS rules (e.g. <a href="api/ng/directive/ngCloak">ngCloak</a>).
+To make those directives work in CSP mode, include the <code>angular-csp.css</code> manually.</p>
+<p>In order to use this feature put the <code>ngCsp</code> directive on the root element of the application.</p>
+<p><em>Note: This directive is only available in the <code>ng-csp</code> and <code>data-ng-csp</code> attribute form.</em></p>
+
+</div>
+
+
+
+
+<div>
+  
+
+  
+  <h2>Directive Info</h2>
+  <ul>
+    
+    <li>This directive executes at priority level 0.</li>
+  </ul>
+
+  
+  <h2 id="usage">Usage</h2>
+  <div class="usage">
+  
+    <ul>
+    <li>as attribute:
+        <pre><code>&lt;html&gt;&#10;...&#10;&lt;/html&gt;</code></pre>
+      </li>
+    
+  </div>
+  
+  
+
+
+  
+  <h2 id="example">Example</h2><p>This example shows how to apply the <code>ngCsp</code> directive to the <code>html</code> tag.</p>
+<pre><code class="lang-html">     &lt;!doctype html&gt;
+     &lt;html ng-app ng-csp&gt;
+     ...
+     ...
+     &lt;/html&gt;</code></pre>
+
+</div>
+
+

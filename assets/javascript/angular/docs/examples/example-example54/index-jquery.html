@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Example - example-example54-jquery</title>
+  
+
+  <script src="../../components/jquery-1.10.2/jquery.js"></script>
+  <script src="../../../angular.js"></script>
+  
+
+  
+</head>
+<body ng-app="">
+    <script>
+    function Ctrl($scope) {
+      $scope.amount = 1234.56;
+    }
+  </script>
+  <div ng-controller="Ctrl">
+    <input type="number" ng-model="amount"> <br>
+    default currency symbol ($): <span id="currency-default">{{amount | currency}}</span><br>
+    custom currency identifier (USD$): <span>{{amount | currency:"USD$"}}</span>
+  </div>
+</body>
+</html>

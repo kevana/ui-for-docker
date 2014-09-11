@@ -1,0 +1,54 @@
+<div class="ui menu">
+    <a class="item" href="/">
+        <i class="hdd icon"></i>Hosts
+    </a>
+    <a class="active item" href="/#/containers">
+        <i class="tasks icon"></i>Containers
+    </a>
+</div>
+
+<table class="ui table segment">
+
+    <thead>
+        <tr>
+            <th>Container</th>
+            <th>Instances</th>
+            <th>Cpu</th>
+            <th>Memory</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr ng-repeat="container in containers | orderBy:predicate">
+
+            <td>
+                <a href="/#/containers/{{container.image}}">{{container.image}}</a>
+            </td>
+
+            <td>{{container.instances}}</td>
+            <td>{{container.cpus}}</td>
+            <td>{{container.memory}} mb</td>
+
+            <td>
+                <div class="ui inline group">
+                    <i class="refresh icon"></i>
+                    <i class="trash icon"></i>
+                </div>
+            </td>
+
+        </tr>
+    </tbody>
+
+    <tfoot>
+        <tr>
+            <th colspan="3">
+                <div class="ui small blue labeled icon button" ng-click="deploy()">
+                    <i class="download disk icon"></i>Deploy</div>
+            </th>
+        </tr>
+    </tfoot>
+
+</table>
+
+<div ng-include="template" ng-controller="DeployController"></div>

@@ -1,0 +1,47 @@
+html,
+body {
+    font-size: 15px;
+    height: 100%;
+}
+body {
+    font-family: "Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    background: #FFFFFF;
+    margin: 0px;
+    padding: 10px;
+    color: #555555;
+    text-rendering: optimizeLegibility;
+    min-width: 320px;
+}
+.legend .title {
+    font-size: 0.7em;
+    margin: 0.5em;
+    border-style: solid;
+    border-width: 0 0 0 1em;
+    padding: 0 0.3em;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0;
+    /* <-- Apparently some margin are still there even though it's hidden */
+}
+.box {
+    border-style: solid;
+    border-width: 0.07em;
+    border-color: gray;
+}
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+.x.axis path {
+    display: none;
+}
+.line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+}

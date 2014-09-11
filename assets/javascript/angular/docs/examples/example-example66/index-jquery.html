@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Example - example-example66-jquery</title>
+  
+
+  <script src="../../components/jquery-1.10.2/jquery.js"></script>
+  <script src="../../../angular.js"></script>
+  
+
+  
+</head>
+<body ng-app="">
+    <script>
+    function ExampleController($cookies) {
+      // Retrieving a cookie
+      var favoriteCookie = $cookies.myFavorite;
+      // Setting a cookie
+      $cookies.myFavorite = 'oatmeal';
+    }
+  </script>
+</body>
+</html>

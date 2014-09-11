@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Example - example-ngModelOptions-directive-debounce-jquery</title>
+  
+
+  <script src="../../components/jquery-1.10.2/jquery.js"></script>
+  <script src="../../../angular.js"></script>
+  <script src="app.js"></script>
+  
+
+  
+</head>
+<body ng-app="">
+    <div ng-controller="Ctrl">
+    <form name="userForm">
+      Name:
+      <input type="text" name="userName"
+             ng-model="user.name"
+             ng-model-options="{ debounce: 1000 }" />
+      <button ng-click="userForm.userName.$cancelUpdate(); user.name=''">Clear</button><br />
+    </form>
+    <pre>user.name = <span ng-bind="user.name"></span></pre>
+  </div>
+</body>
+</html>

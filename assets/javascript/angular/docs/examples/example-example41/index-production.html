@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Example - example-example41-production</title>
+  
+
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.6/angular.min.js"></script>
+  
+
+  
+</head>
+<body ng-app="">
+  <script>
+  function Ctrl($scope) {
+    $scope.list = [['a', 'b'], ['c', 'd']];
+  }
+</script>
+<div ng-controller="Ctrl">
+  <div ng-repeat="innerList in list" ng-init="outerIndex = $index">
+    <div ng-repeat="value in innerList" ng-init="innerIndex = $index">
+       <span class="example-init">list[ {{outerIndex}} ][ {{innerIndex}} ] = {{value}};</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

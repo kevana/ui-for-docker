@@ -1,0 +1,66 @@
+<div id="deploy-modal" class="ui modal" ng-controller="DeployController">
+    <i class="close icon"></i>
+
+    <div class="header">
+        Deploy Container to Cluster
+    </div>
+
+    <div class="content">
+
+        <div class="ui fluid form segment">
+
+            <p>Deploying a new container onto the cluster.</p>
+
+            <div class="field">
+                <label>Image</label>
+                <input placeholder="Image name" type="text" ng-model="image">
+            </div>
+
+            <div class="field">
+                <label>Cpus</label>
+                <input placeholder="1" type="number" ng-model="cpus">
+            </div>
+
+            <div class="field">
+                <label>Memory</label>
+                <input placeholder="100" type="number" ng-model="memory">
+            </div>
+
+            <div class="field">
+                <label>Command</label>
+                <input placeholder="" type="text" ng-model="cmd">
+            </div>
+
+            <div class="field">
+                <label>Volumes</label>
+                <input placeholder="(space separated)" type="text" ng-model="volumes">
+            </div>
+
+            <div class="field">
+                <label>Instances</label>
+                <input placeholder="1" type="number" ng-model="instances">
+            </div>
+
+            <div class="field">
+                <label>Host</label>
+                <div class="ui dropdown selection">
+                    <input type="hidden" name="host" value="{{selectedHost.id}}">
+                    <div class="default text">Host</div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <div class="item" data-ng-init="init()" data-value="{{host.id}}" ng-repeat="host in hosts" ng-click="select(host)">{{host.id}}</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="actions">
+        <div class="ui negative button">Cancel</div>
+        <div class="ui positive button" ng-click="launch()">Deploy</div>
+    </div>
+    
+</div>
+

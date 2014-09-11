@@ -1,0 +1,53 @@
+<div class="ui menu">
+    <a class="item" href="/">
+        <i class="hdd icon"></i>Hosts
+    </a>
+    <a class="active item" href="/#/containers">
+        <i class="tasks icon"></i>Containers
+    </a>
+</div>
+
+<h2>{{image}}</h2>
+<table class="ui table segment">
+
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Host</th>
+            <th>Cpu</th>
+            <th>Memory</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr ng-repeat="container in containers">
+
+            <td>
+                <a href="/#/containers/{{image}}/{{container.id}}">{{container.id|truncate}}</a>
+            </td>
+
+            <td>{{container.host|truncate}}</td>
+            <td>{{container.cpus}}</td>
+            <td>{{container.memory}} mb</td>
+            <td class="{{container.state|servicestatus}}">{{container.state.status}}</td>
+
+            <td>
+                <div class="ui buttons">
+                    <div class="ui icon button" ng-click="restart(container)">
+                          <i class="refresh icon"></i>
+                    </div>
+                    <div class="ui icon button" ng-click="stop(container)">
+                        <i class="stop icon"></i>
+                    </div>
+                    <div class="ui icon button" ng-click="destroy(container)">
+                          <i class="trash icon"></i>
+                    </div>
+                </div>
+            </td>
+
+        </tr>
+    </tbody>
+
+</table>

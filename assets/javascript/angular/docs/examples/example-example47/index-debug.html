@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Example - example-example47-debug</title>
+  <link href="style.css" rel="stylesheet" type="text/css">
+  
+
+  <script src="../../../angular.js"></script>
+  
+
+  
+</head>
+<body ng-app="">
+     <input type="button" value="set" ng-click="myStyle={color:'red'}">
+   <input type="button" value="clear" ng-click="myStyle={}">
+   <br/>
+   <span ng-style="myStyle">Sample Text</span>
+   <pre>myStyle={{myStyle}}</pre>
+</body>
+</html>
