@@ -94,15 +94,18 @@ function ContainerController($scope, $routeParams, $location, Containers) {
 }
 
 function DeployController($scope, $routeParams, Engines) {
+    $scope.template = 'partials/deploy.html';
+
     $scope.init = function () {
         $('.ui.dropdown').dropdown();
+        $('.ui.radio.checkbox')
+            .checkbox();
     };
 
-    $scope.template = 'partials/deploy.html';
-    $scope.restart = false;
+    $scope.master = {};
 
     $scope.toggleRestart = function () {
-        $scope.restrt = !$scope.restart;
+        $scope.container.restart = !$scope.container.restart;
     };
 
     Engines.query({
@@ -112,15 +115,12 @@ function DeployController($scope, $routeParams, Engines) {
     });
 
     $scope.select = function (host) {
-        $scope.selectedHost = host;
+        $scope.container.host = host;
     };
 
-    $scope.selectMode = 'bridge';
-    $scope.selectmode = function (mode) {
-        $scope.selectMode = mode;
+    $scope.setmode = function (mode) {
+        $scope.container.mode = mode;
     };
-
-    $scope.modes = ['bridge', 'host', 'none'];
 
     $scope.launch = function () {
         /*
@@ -134,12 +134,6 @@ function DeployController($scope, $routeParams, Engines) {
         });
         */
     };
-}
 
-// this needs to move to some super start init func
-function toggleStartSidebar() {
-    $('.ui.sidebar').sidebar({
-        overlay: true
-    })
-        .sidebar('toggle');
+    $scope.container = angular.copy($scope.master);
 }

@@ -7,70 +7,87 @@
 
     <div class="content">
 
-        <div class="ui fluid form segment">
+        <form>
+            <div class="ui form segment">
 
-            <p>Deploying a new container onto the cluster.</p>
+                <p>Deploying a new container onto the cluster.</p>
 
-            <div class="field">
-                <label>Image</label>
-                <input placeholder="Image name" type="text" ng-model="image">
-            </div>
+                <div class="field">
+                    <label>Image</label>
+                    <input placeholder="Image name" type="text" ng-model="container.image">
+                </div>
 
-            <div class="field">
-                <label>Cpus</label>
-                <input placeholder="1" type="number" ng-model="cpus">
-            </div>
+                <div class="field">
+                    <label>Cpus</label>
+                    <input placeholder="0.1" type="number" ng-model="container.cpus">
+                </div>
 
-            <div class="field">
-                <label>Memory</label>
-                <input placeholder="32" type="number" ng-model="memory">
-            </div>
+                <div class="field">
+                    <label>Memory</label>
+                    <input placeholder="{{container.memory}}" type="number" ng-model="container.memory">
+                </div>
 
-            <div class="field">
-                <label>Command</label>
-                <input placeholder="" type="text" ng-model="cmd">
-            </div>
+                <div class="field">
+                    <label>Command</label>
+                    <input placeholder="" type="text" ng-model="container.command">
+                </div>
 
-            <div class="field">
-                <label>Network Mode</label>
-                <div class="ui dropdown selection">
-                    <input type="hidden" name="mode" value="{{selectedMode}}">
-                    <div class="default text">{{selectedMode}}</div>
-                    <i class="dropdown icon"></i>
-                    <div class="menu">
-                        <div class="item" data-ng-init="init()" data-value="{{mode}}" ng-repeat="mode in modes" ng-click="selectmode(mode)">{{mode}}</div>
+                <div class="field">
+                    <label>Network Mode</label>
+                    <div class="grouped inline fields">
+                        <div class="field" ng-click="setmode('bridge')">
+                            <div class="ui radio checkbox">
+                                <input type="radio" name="mode" value="bridge">
+                                <label></label>
+                            </div>
+                            <label>Bridge</label>
+                        </div>
+                        <div class="field" ng-click="setmode('host')">
+                            <div class="ui radio checkbox">
+                                <input type="radio" name="mode" value="host">
+                                <label></label>
+                            </div>
+                            <label>Host</label>
+                        </div>
+                        <div class="field" ng-click="setmode('none')">
+                            <div class="ui radio checkbox">
+                                <input type="radio" name="mode" value="none">
+                                <label></label>
+                            </div>
+                            <label>None</label>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="field">
-                <label>Volumes</label>
-                <input placeholder="(space separated)" type="text" ng-model="volumes">
-            </div>
-
-            <div class="field">
-                <div class="ui checkbox">
-                    <input type="checkbox" ng-click="toggleRestart()">
-                    <label>Restart</label>
+                <div class="field">
+                    <label>Volumes</label>
+                    <input placeholder="(space separated)" type="text" ng-model="container.volumes">
                 </div>
-            </div>
 
-            <div class="field">
-                <label>Host</label>
-                <div class="ui dropdown selection">
-                    <input type="hidden" name="host" value="{{selectedHost.id}}">
-                    <div class="default text">Host</div>
-                    <i class="dropdown icon"></i>
-                    <div class="menu">
-                        <div class="item" data-ng-init="init()" data-value="{{host.id}}" ng-repeat="host in hosts" ng-click="select(host)">{{host.id}}</div>
+                <div class="field">
+                    <div class="ui checkbox">
+                        <input type="checkbox" ng-model="container.restart">
+                        <label>Restart</label>
                     </div>
                 </div>
-            </div>
 
-        </div>
+                <div class="field">
+                    <label>Host</label>
+                    <div class="ui dropdown selection" id="hostdropdown">
+                        <input type="hidden" name="host" value="{{container.host}}">
+                        <div class="default text">Any</div>
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <div class="item" data-ng-init="init()" data-value="{{host.id}}" ng-repeat="host in hosts" ng-click="select(host)">{{host.id}}</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
 
     </div>
-
+    <pre>form = {{container | json}}</pre>
+    </form>
     <div class="actions">
         <div class="ui negative button">Cancel</div>
         <div class="ui positive button" ng-click="launch()">Deploy</div>
