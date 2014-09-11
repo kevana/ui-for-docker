@@ -32,11 +32,11 @@ function ContainersController($scope, Containers) {
     Containers.query({}, function (data) {
         var groups = {};
         angular.forEach(data, function (v) {
-            if (groups[v.image] === null || groups[v.image] === undefined) {
-                groups[v.image] = [];
+            if (groups[v.image.name] === null || groups[v.image.name] === undefined) {
+                groups[v.image.name] = [];
             }
 
-            var c = groups[v.image];
+            var c = groups[v.image.name];
             c.push(v);
         });
 
@@ -47,8 +47,8 @@ function ContainersController($scope, Containers) {
             var memory = 0;
 
             angular.forEach(v, function (c) {
-                cpus += c.cpus.length;
-                memory += c.memory;
+                cpus += c.image.cpus;
+                memory += c.image.memory;
             });
 
             containers.push({
@@ -72,7 +72,7 @@ function ContainerController($scope, $routeParams, $location, Containers) {
         var containers = [];
 
         angular.forEach(d, function (v) {
-            if (v.image == $routeParams.name) {
+            if (v.image.name == $routeParams.name) {
                 containers.push(v);
             }
         });

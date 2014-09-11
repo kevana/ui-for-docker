@@ -1,12 +1,3 @@
-<div class="ui menu">
-    <a class="item" href="/">
-        <i class="hdd icon"></i>Hosts
-    </a>
-    <a class="active item" href="/#/containers">
-        <i class="tasks icon"></i>Containers
-    </a>
-</div>
-
 <h2>{{image}}</h2>
 <table class="ui table segment">
 
@@ -25,24 +16,24 @@
         <tr ng-repeat="container in containers">
 
             <td>
-                <a href="/#/containers/{{image}}/{{container.id}}">{{container.id|truncate}}</a>
+                <a href="/#/containers/{{image}}/{{container.id}}">{{container.name}}</a>
             </td>
 
-            <td>{{container.host|truncate}}</td>
-            <td>{{container.cpus}}</td>
-            <td>{{container.memory}} mb</td>
+            <td>{{container.engine.id|truncate}}</td>
+            <td>{{container.image.cpus}}</td>
+            <td>{{container.image.memory}} mb</td>
             <td class="{{container.state|servicestatus}}">{{container.state.status}}</td>
 
             <td>
                 <div class="ui buttons">
-                    <div class="ui icon button" ng-click="restart(container)">
-                          <i class="refresh icon"></i>
+                    <div class="ui small icon button" ng-click="start(container)">
+                        <i class="play icon"></i>
                     </div>
-                    <div class="ui icon button" ng-click="stop(container)">
+                    <div class="ui small icon button" ng-click="stop(container)">
                         <i class="stop icon"></i>
                     </div>
-                    <div class="ui icon button" ng-click="destroy(container)">
-                          <i class="trash icon"></i>
+                    <div class="ui small icon button" ng-click="destroy(container)">
+                        <i class="trash icon"></i>
                     </div>
                 </div>
             </td>
