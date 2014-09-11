@@ -7,17 +7,9 @@ angular.module('dockerui', ['ngRoute', 'dockerui.services', 'dockerui.filters', 
                 templateUrl: 'partials/dashboard.html',
                 controller: 'DashboardController'
             });
-            $routeProvider.when('/hosts', {
-                templateUrl: 'partials/dashboard.html',
-                controller: 'DashboardController'
-            });
             $routeProvider.when('/containers/:name*', {
                 templateUrl: 'partials/container.html',
                 controller: 'ContainerController'
-            });
-            $routeProvider.when('/containers', {
-                templateUrl: 'partials/containers.html',
-                controller: 'ContainersController'
             });
             $routeProvider.otherwise({
                 redirectTo: '/'

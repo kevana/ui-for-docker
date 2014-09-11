@@ -1,21 +1,11 @@
 'use strict';
 
 // Page header that displays the totals for the cluster
-function HeaderController($scope, Hosts, Containers) {
+function HeaderController($scope, Engines, Containers) {
     $scope.template = 'partials/header.html';
 
-    Hosts.query({}, function (d) {
-        $scope.hosts = d.length;
-        var cpus = 0;
-        var memory = 0;
-
-        angular.forEach(d, function (v) {
-            cpus += v.cpus;
-            memory += v.memory;
-        });
-
-        $scope.cpus = cpus;
-        $scope.memory = memory;
+    Engines.query({}, function (d) {
+        $scope.engines = d.length;
     });
 
     Containers.query({}, function (d) {
@@ -25,25 +15,15 @@ function HeaderController($scope, Hosts, Containers) {
 
 // Dashboard includes overall information with graphs and services 
 // for the cluster
-function DashboardController($scope, Hosts) { }
-
-function HostsController($scope, $routeParams, Hosts) {
-    $scope.template = 'partials/hosts.html';
-
-    Hosts.query({
-        name: $routeParams.id
-    }, function (data) {
-        $scope.hosts = data;
-    });
-}
+function DashboardController($scope) {}
 
 function ContainersController($scope, Containers) {
     $scope.template = 'partials/containers.html';
     $scope.predicate = '-instances';
 
     $scope.deploy = function () {
-        $('#deploy-modal').modal('show',{
-            onApprove: function() {
+        $('#deploy-modal').modal('show', {
+            onApprove: function () {
                 console.log("approve");
             }
         });
@@ -83,7 +63,7 @@ function ContainersController($scope, Containers) {
     });
 }
 
-function ContainerController($scope, $routeParams, $location, Containers, Tasks) {
+function ContainerController($scope, $routeParams, $location, Containers) {
     $scope.template = 'partials/container.html';
 
     $scope.image = $routeParams.name;
@@ -100,58 +80,38 @@ function ContainerController($scope, $routeParams, $location, Containers, Tasks)
         $scope.containers = containers;
     });
 
-    $scope.stop = function(container) {
-        Tasks.add({
-            command: "stop",
-            host: container.host_id,
-            args: {
-                containerId: container.id
-            }
-        });
+    $scope.stop = function (container) {
         $location.path("/containers");
     };
 
-    $scope.restart = function(container) {
-        Tasks.add({
-            command: "restart",
-            host: container.host_id,
-            args: {
-                containerId: container.id
-            }
-        });
+    $scope.restart = function (container) {
         $location.path("/containers");
     };
 
-    $scope.destroy = function(container) {
-        Tasks.add({
-            command: "destroy",
-            host: container.host_id,
-            args: {
-                containerId: container.id
-            }
-        });
+    $scope.destroy = function (container) {
         $location.path("/containers");
     };
 }
 
-function DeployController($scope, $routeParams, Hosts, Tasks) {
-    $scope.init = function() {
+function DeployController($scope, $routeParams, Engines) {
+    $scope.init = function () {
         $('.ui.dropdown').dropdown();
     };
 
     $scope.template = 'partials/deploy.html';
 
-    Hosts.query({
+    Engines.query({
         name: $routeParams.id
     }, function (data) {
         $scope.hosts = data;
     });
 
-    $scope.select = function(host) {
+    $scope.select = function (host) {
         $scope.selectedHost = host;
     };
 
-    $scope.launch = function() {
+    $scope.launch = function () {
+        /*
         Tasks.add({
             command: "run",
             host: $scope.selectedHost.id,
@@ -160,6 +120,7 @@ function DeployController($scope, $routeParams, Hosts, Tasks) {
             memory: $scope.memory,
             instances: $scope.instances
         });
+        */
     };
 }
 

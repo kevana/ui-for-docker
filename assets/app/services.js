@@ -1,23 +1,15 @@
 'use strict';
 
 angular.module('dockerui.services', ['ngResource'])
-    .factory('Hosts', function ($resource) {
-        return $resource('/api/hosts/:name/:action', {}, {
+    .factory('Engines', function ($resource) {
+        return $resource('/api/engines/:name/:action', {}, {
             query: {
                 method: 'GET',
                 isArray: true,
                 params: {
                     name: "@name"
                 }
-            },
-            metrics: {
-                method: 'GET',
-                isArray: true,
-                params: {
-                    action: 'metrics',
-                    name: "@name"
-                }
-            },
+            }
         });
     })
     .factory('Containers', function ($resource) {
@@ -28,24 +20,6 @@ angular.module('dockerui.services', ['ngResource'])
                 params: {
                     name: "@name"
                 }
-            },
-            metrics: {
-                method: 'GET',
-                isArray: true,
-                params: {
-                    action: 'metrics',
-                    name: "@name"
-                }
             }
-        });
-    })
-    .factory('Tasks', function ($resource) {
-        return $resource('/api/tasks/:action', {}, {
-            add: {
-                method: 'POST'
-            },
-            containerStop: {
-                method: 'POST'
-            },
         });
     });
