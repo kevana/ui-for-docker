@@ -99,6 +99,11 @@ function DeployController($scope, $routeParams, Engines) {
     };
 
     $scope.template = 'partials/deploy.html';
+    $scope.restart = false;
+
+    $scope.toggleRestart = function () {
+        $scope.restrt = !$scope.restart;
+    };
 
     Engines.query({
         name: $routeParams.id
@@ -109,6 +114,13 @@ function DeployController($scope, $routeParams, Engines) {
     $scope.select = function (host) {
         $scope.selectedHost = host;
     };
+
+    $scope.selectMode = 'bridge';
+    $scope.selectmode = function (mode) {
+        $scope.selectMode = mode;
+    };
+
+    $scope.modes = ['bridge', 'host', 'none'];
 
     $scope.launch = function () {
         /*

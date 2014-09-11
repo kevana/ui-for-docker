@@ -11,6 +11,15 @@ angular.module('dockerui.filters', [])
             }
         };
     })
+    .filter('viewports', function () {
+        return function (ports) {
+            var result = [];
+            angular.forEach(ports, function (p) {
+                result.push(p.port);
+            });
+            return result.join(',');
+        };
+    })
     .filter('truncate', function () {
         return function (t) {
             if (t.length < 12) {

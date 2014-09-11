@@ -108,6 +108,10 @@ func main() {
 			logger.Fatal(err)
 		}
 
+		if err := manager.RegisterScheduler("", &scheduler.HostScheduler{}); err != nil {
+			logger.Fatal(err)
+		}
+
 		if err := http.ListenAndServe(context.GlobalString("addr"), handler); err != nil {
 			logger.Fatal(err)
 		}

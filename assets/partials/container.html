@@ -1,12 +1,20 @@
+<div class="ui menu">
+    <a class="active item" href="/">
+        <i class="tasks icon"></i>Containers
+    </a>
+</div>
+
+
 <h2>{{image}}</h2>
 <table class="ui table segment">
 
     <thead>
         <tr>
             <th>ID</th>
-            <th>Host</th>
+            <th>Engine</th>
             <th>Cpu</th>
             <th>Memory</th>
+            <th>Ports</th>
             <th>Status</th>
             <th>Actions</th>
         </tr>
@@ -22,6 +30,8 @@
             <td>{{container.engine.id|truncate}}</td>
             <td>{{container.image.cpus}}</td>
             <td>{{container.image.memory}} mb</td>
+            <td>{{container.ports|viewports}}</td>
+
             <td class="{{container.state|servicestatus}}">{{container.state.status}}</td>
 
             <td>
@@ -34,6 +44,9 @@
                     </div>
                     <div class="ui small icon button" ng-click="destroy(container)">
                         <i class="trash icon"></i>
+                    </div>
+                    <div class="ui small icon button" ng-click="logs(container)">
+                        <i class="open folder icon"></i>
                     </div>
                 </div>
             </td>

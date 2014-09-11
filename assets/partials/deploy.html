@@ -23,7 +23,7 @@
 
             <div class="field">
                 <label>Memory</label>
-                <input placeholder="100" type="number" ng-model="memory">
+                <input placeholder="32" type="number" ng-model="memory">
             </div>
 
             <div class="field">
@@ -32,13 +32,27 @@
             </div>
 
             <div class="field">
+                <label>Network Mode</label>
+                <div class="ui dropdown selection">
+                    <input type="hidden" name="mode" value="{{selectedMode}}">
+                    <div class="default text">{{selectedMode}}</div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <div class="item" data-ng-init="init()" data-value="{{mode}}" ng-repeat="mode in modes" ng-click="selectmode(mode)">{{mode}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field">
                 <label>Volumes</label>
                 <input placeholder="(space separated)" type="text" ng-model="volumes">
             </div>
 
             <div class="field">
-                <label>Instances</label>
-                <input placeholder="1" type="number" ng-model="instances">
+                <div class="ui checkbox">
+                    <input type="checkbox" ng-click="toggleRestart()">
+                    <label>Restart</label>
+                </div>
             </div>
 
             <div class="field">
