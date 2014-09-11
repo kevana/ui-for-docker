@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('citadel.filters', [])
+angular.module('dockerui.filters', [])
     .filter('servicestatus', function () {
         return function (status) {
             switch (status.status) {

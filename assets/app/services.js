@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('citadel.services', ['ngResource'])
+angular.module('dockerui.services', ['ngResource'])
     .factory('Hosts', function ($resource) {
         return $resource('/api/hosts/:name/:action', {}, {
             query: {

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('citadel', ['ngRoute', 'citadel.services', 'citadel.filters', 'citadel.directives'])
+angular.module('dockerui', ['ngRoute', 'dockerui.services', 'dockerui.filters', 'dockerui.directives'])
     .config(['$routeProvider',
         function ($routeProvider) {
             $routeProvider.when('/', {
