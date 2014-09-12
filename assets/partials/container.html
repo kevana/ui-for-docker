@@ -14,8 +14,10 @@
             <th>Engine</th>
             <th>Cpu</th>
             <th>Memory</th>
+            <th>Network</th>
             <th>Ports</th>
             <th>Status</th>
+            <th>Restart</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -30,10 +32,11 @@
             <td>{{container.engine.id|truncate}}</td>
             <td>{{container.image.cpus}}</td>
             <td>{{container.image.memory}} mb</td>
+            <td>{{container.network_mode}}</td>
             <td>{{container.ports|viewports}}</td>
 
             <td class="{{container.state|servicestatus}}">{{container.state.status}}</td>
-
+            <td>{{container.image.restart_policy.name}}</td>
             <td>
                 <div class="ui buttons">
                     <div class="ui small icon button" ng-click="start(container)">

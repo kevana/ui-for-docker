@@ -100,6 +100,8 @@ function DeployController($scope, $routeParams, Engines) {
         $('.ui.dropdown').dropdown();
         $('.ui.radio.checkbox')
             .checkbox();
+        $('.ui.checkbox')
+            .checkbox();
     };
 
     $scope.master = {};
@@ -115,11 +117,21 @@ function DeployController($scope, $routeParams, Engines) {
     });
 
     $scope.select = function (host) {
-        $scope.container.host = host;
+        $scope.container.host = host.id;
     };
 
     $scope.setmode = function (mode) {
         $scope.container.mode = mode;
+    };
+
+    $scope.setrestart = function () {
+        if ($scope.container.restart) {
+            $scope.container.restart = false;
+
+            return;
+        }
+
+        $scope.container.restart = true;
     };
 
     $scope.launch = function () {

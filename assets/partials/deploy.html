@@ -13,6 +13,11 @@
                 <p>Deploying a new container onto the cluster.</p>
 
                 <div class="field">
+                    <label>Name</label>
+                    <input placeholder="Name" type="text" ng-model="container.name">
+                </div>
+
+                <div class="field">
                     <label>Image</label>
                     <input placeholder="Image name" type="text" ng-model="container.image">
                 </div>
@@ -61,12 +66,17 @@
 
                 <div class="field">
                     <label>Volumes</label>
-                    <input placeholder="(space separated)" type="text" ng-model="container.volumes">
+                    <input placeholder="/volumes:/redis" type="text" ng-model="container.volumes">
                 </div>
 
                 <div class="field">
-                    <div class="ui checkbox">
-                        <input type="checkbox" ng-model="container.restart">
+                    <label>Environment</label>
+                    <input placeholder="HOME=/root PATH=/bin" type="text" ng-model="container.environment">
+                </div>
+
+                <div class="field">
+                    <div class="ui checkbox" ng-click="setrestart()">
+                        <input type="checkbox">
                         <label>Restart</label>
                     </div>
                 </div>
