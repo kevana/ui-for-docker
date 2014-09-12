@@ -1,0 +1,54 @@
+<div class="ui menu">
+    <a class="active item" href="/">
+        <i class="tasks icon"></i>Containers
+    </a>
+</div>
+
+<h4>{{container.name}}</h4>
+<p>
+    <a href="{{container|geturl}}" target="_blank">View</a>
+</p>
+<table class="ui basic table">
+    <tbody>
+        <tr>
+            <td>Engine ID</td>
+            <td>{{container.engine.id}}</td>
+        </tr>
+        <tr>
+            <td>Engine Address</td>
+            <td>{{container.engine.addr}}</td>
+        </tr>
+        <tr>
+            <td>Image</td>
+            <td>{{container.image.name}}</td>
+        </tr>
+        <tr>
+            <td>Cpus</td>
+            <td>{{container.image.cpus}}</td>
+        </tr>
+        <tr>
+            <td>Memory</td>
+            <td>{{container.image.memory}}</td>
+        </tr>
+        <tr>
+            <td>Hostname</td>
+            <td>{{container.image.hostname}}</td>
+        </tr>
+        <tr>
+            <td>Network Mode</td>
+            <td>{{container.image.network_mode}}</td>
+        </tr>
+        <tr>
+            <td>Restart Policy</td>
+            <td>{{container.image.restart_policy.name}}</td>
+        </tr>
+        <tr>
+            <td>State</td>
+            <td>{{container.state}}</td>
+        </tr>
+        <tr>
+            <td>Ports</td>
+            <td>{{container.ports|viewports}}</td>
+        </tr>
+    </tbody>
+</table>

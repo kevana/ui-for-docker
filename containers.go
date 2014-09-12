@@ -6,9 +6,11 @@ import (
 	"strconv"
 
 	"github.com/citadel/citadel"
+	"github.com/gorilla/mux"
 )
 
 func containers(w http.ResponseWriter, r *http.Request) {
+	id := mux.Vars(r)["id"]
 	containers, err := manager.ListContainers(true)
 	if err != nil {
 		logger.WithField("error", err).Error("list containers")
@@ -17,8 +19,26 @@ func containers(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var out []*citadel.Container
+	if id != "" {
+		for _, c := range containers {
+			if c.ID == id {
+				out = []*citadel.Container{c}
+				break
+			}
+		}
+	} else {
+		out = containers
+	}
+
+	if len(out) == 0 && id != "" {
+		http.Error(w, http.StatusText(404), http.StatusNotFound)
+
+		return
+	}
+
 	w.Header().Set("content-type", "application/json")
-	if err := json.NewEncoder(w).Encode(containers); err != nil {
+	if err := json.NewEncoder(w).Encode(out); err != nil {
 		logger.WithField("error", err).Error("encode json")
 
 		return

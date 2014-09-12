@@ -93,7 +93,18 @@ function ContainerController($scope, $routeParams, $location, Containers) {
     };
 }
 
-function DeployController($scope, $routeParams, Engines, Containers) {
+// InspectController displays the information for a single container
+function InspectController($scope, $routeParams, Containers) {
+    $scope.template = 'partials/inspect.html';
+
+    Containers.query({
+        name: $routeParams.id
+    }, function (c) {
+        $scope.container = c[0];
+    });
+}
+
+function DeployController($scope, $routeParams, $location, Engines, Containers) {
     $scope.template = 'partials/deploy.html';
 
     $scope.init = function () {
@@ -174,7 +185,7 @@ function DeployController($scope, $routeParams, Engines, Containers) {
         }
 
         Containers.start(data, function (container) {
-            console.log(container);
+            $location.path('/#/inspect/' + container.id);
         });
     };
 

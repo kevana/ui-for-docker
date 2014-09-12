@@ -11,6 +11,10 @@ angular.module('dockerui', ['ngRoute', 'dockerui.services', 'dockerui.filters', 
                 templateUrl: 'partials/container.html',
                 controller: 'ContainerController'
             });
+            $routeProvider.when('/inspect/:id', {
+                templateUrl: 'partials/inspect.html',
+                controller: 'InspectController'
+            });
             $routeProvider.otherwise({
                 redirectTo: '/'
             });

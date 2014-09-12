@@ -2,7 +2,7 @@
 
 angular.module('dockerui.services', ['ngResource'])
     .factory('Engines', function ($resource) {
-        return $resource('/api/engines/:name/:action', {}, {
+        return $resource('/api/engines/:name', {}, {
             query: {
                 method: 'GET',
                 isArray: true,
@@ -13,7 +13,7 @@ angular.module('dockerui.services', ['ngResource'])
         });
     })
     .factory('Containers', function ($resource) {
-        return $resource('/api/containers/:name/:action', {}, {
+        return $resource('/api/containers/:name', {}, {
             query: {
                 method: 'GET',
                 isArray: true,

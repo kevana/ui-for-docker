@@ -20,6 +20,24 @@ angular.module('dockerui.filters', [])
             return result.join(',');
         };
     })
+    .filter('geturl', function () {
+        return function (container) {
+            if (container === null ||
+                container === undefined ||
+                container.ports === undefined) {
+                return '';
+            }
+            if (container.ports.length !== 1) {
+                return '';
+            }
+
+            var port = container.ports[0];
+            var parser = document.createElement('a');
+            parser.href = container.engine.addr;
+
+            return 'http://' + parser.hostname + ':' + port.port.toString();
+        };
+    })
     .filter('truncate', function () {
         return function (t) {
             if (t.length < 12) {
