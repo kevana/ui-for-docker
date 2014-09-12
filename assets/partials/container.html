@@ -32,7 +32,7 @@
             <td>{{container.engine.id|truncate}}</td>
             <td>{{container.image.cpus}}</td>
             <td>{{container.image.memory}} mb</td>
-            <td>{{container.network_mode}}</td>
+            <td>{{container.image.network_mode}}</td>
             <td>{{container.ports|viewports}}</td>
 
             <td class="{{container.state|servicestatus}}">{{container.state.status}}</td>

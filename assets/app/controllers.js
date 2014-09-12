@@ -93,7 +93,7 @@ function ContainerController($scope, $routeParams, $location, Containers) {
     };
 }
 
-function DeployController($scope, $routeParams, Engines) {
+function DeployController($scope, $routeParams, Engines, Containers) {
     $scope.template = 'partials/deploy.html';
 
     $scope.init = function () {
@@ -104,7 +104,14 @@ function DeployController($scope, $routeParams, Engines) {
             .checkbox();
     };
 
-    $scope.master = {};
+    $scope.master = {
+        environment: '',
+        args: '',
+        volumes: '',
+        cpus: 0.1,
+        memory: 32,
+        host: ''
+    };
 
     $scope.toggleRestart = function () {
         $scope.container.restart = !$scope.container.restart;
@@ -135,16 +142,40 @@ function DeployController($scope, $routeParams, Engines) {
     };
 
     $scope.launch = function () {
-        /*
-        Tasks.add({
-            command: "run",
-            host: $scope.selectedHost.id,
-            image: $scope.image,
-            cpus: $scope.cpus,
-            memory: $scope.memory,
-            instances: $scope.instances
+        var c = $scope.container;
+        var data = {
+            cpus: c.cpus,
+            memory: c.memory,
+            restart_policy: {},
+            network_mode: c.mode,
+            environment: {},
+            args: [],
+            name: c.image,
+            container_name: c.name
+        };
+
+        if (c.restart) {
+            data.restart_policy.name = 'always';
+        }
+
+        if (c.host !== '') {
+            data.labels = ['host:' + c.host];
+        }
+
+        if (c.environment !== '') {
+            angular.forEach(c.environment.split(' '), function (e) {
+                var parts = e.split('=');
+                data.environment[parts[0]] = parts[1];
+            });
+        }
+
+        if (c.args !== '') {
+            data.args = JSON.parse(c.args);
+        }
+
+        Containers.start(data, function (container) {
+            console.log(container);
         });
-        */
     };
 
     $scope.container = angular.copy($scope.master);

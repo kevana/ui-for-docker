@@ -55,6 +55,8 @@ func createAPIHandler() http.Handler {
 	r.HandleFunc("/engines", enginesRemove).Methods("DELETE")
 
 	r.HandleFunc("/containers", containers).Methods("GET")
+	r.HandleFunc("/containers", containersStart).Methods("POST")
+	r.HandleFunc("/containers", containersRemove).Methods("DELETE")
 
 	return r
 }

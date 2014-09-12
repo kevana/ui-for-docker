@@ -20,6 +20,9 @@ angular.module('dockerui.services', ['ngResource'])
                 params: {
                     name: "@name"
                 }
+            },
+            start: {
+                method: 'POST'
             }
         });
     });
