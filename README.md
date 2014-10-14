@@ -16,6 +16,7 @@ DockerUI is a web interface to interact with the Remote API.  The goal is to pro
 * `docker run -d -p 9000:9000 -v /var/run/docker.sock:/docker.sock crosbymichael/dockerui -e /docker.sock`
 * Open your browser to `http://<dockerd host ip>:9000`
 
+* Or use Microbox build (only 16MB size) `docker run -d -p 9000:9000 -v /var/run/docker.sock:/docker.sock microbox/dockerui`
 
 Bind mounting the unix socket into the dockerui container is much more secure than exposing your docker 
 daemon over tcp.  You should still secure your dockerui instance behind some type of auth.  Maybe running 
