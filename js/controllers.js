@@ -208,7 +208,36 @@ function ContainerController($scope, $routeParams, $location, Container, Message
         }
     });
 
-   $scope.getChanges();
+    $scope.getChanges();
+}
+
+function ContainerLogsController($scope, $routeParams, $location, $anchorScroll, ContainerLogs) {
+    $scope.stdout = '';
+    $scope.stderr = '';
+
+    function getLogs() {
+        console.log('called');
+        ContainerLogs.getLogs($routeParams.id, {stdout: 1, stderr: 0}, function(data, status, headers, config) {
+            $scope.stdout = data;
+        });
+        ContainerLogs.getLogs($routeParams.id, {stdout: 0, stderr: 1}, function(data, status, headers, config) {
+            $scope.stderr = data;
+        });
+    }
+
+    // initial call
+    getLogs();
+    var logIntervalId = window.setInterval(getLogs, 5000);
+
+    $scope.$on("$destroy", function(){
+        // clearing interval when view changes
+        clearInterval(logIntervalId);
+    });
+
+    $scope.scrollTo = function(id) {
+        $location.hash(id);
+        $anchorScroll();
+    }
 }
 
 // Controller for the list of containers

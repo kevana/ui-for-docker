@@ -5,6 +5,7 @@ angular.module('dockerui', ['ngRoute', 'dockerui.services', 'dockerui.filters'])
         $routeProvider.when('/', {templateUrl: 'partials/dashboard.html', controller: 'DashboardController'});
         $routeProvider.when('/containers/', {templateUrl: 'partials/containers.html', controller: 'ContainersController'});
         $routeProvider.when('/containers/:id/', {templateUrl: 'partials/container.html', controller: 'ContainerController'});
+        $routeProvider.when('/containers/:id/logs/', {templateUrl: 'partials/logs.html', controller: 'ContainerLogsController'});
         $routeProvider.when('/images/', {templateUrl: 'partials/images.html', controller: 'ImagesController'});
         $routeProvider.when('/images/:id/', {templateUrl: 'partials/image.html', controller: 'ImageController'});
         $routeProvider.when('/settings', {templateUrl: 'partials/settings.html', controller: 'SettingsController'});
