@@ -125,3 +125,23 @@ body {
     border-width: 0 0 0 1em;
     padding: 0 0.3em;
 }
+
+svg {
+    overflow: hidden;
+    border: 1px solid blue;
+}
+
+.node rect {
+    stroke: #333;
+    stroke-width: 1.5px;
+}
+
+.edgeLabel rect {
+    fill: #fff;
+}
+
+.edgePath {
+    stroke: #333;
+    stroke-width: 1.5px;
+    fill: none;
+}

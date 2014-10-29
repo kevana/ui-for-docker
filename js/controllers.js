@@ -1,3 +1,4 @@
+/* global angular, $, Chart, legend, ContainerViewModel, ImageViewModel, dagreD3, console, d3 */
 
 function MastheadController($scope) {
     $scope.template = 'partials/masthead.html';
@@ -443,6 +444,50 @@ function ImageController($scope, $q, $routeParams, $location, Image, Container, 
         }
         $('#error-message').show();
     });
+
+    //Getting all images is wasteful, but I don't know of a way to filter it down
+    Image.query({all: 1}, function viz(d) {
+        var maxLength = 12;
+        var g = new dagreD3.Digraph();
+        var renderer = new dagreD3.Renderer();
+        renderer.edgeInterpolate('linear');
+        renderer.zoom(false);
+
+        d.forEach(function addNodes(i) {
+            var tags = i.RepoTags.filter(function(t) { return t != '<none>:<none>'; });
+            if(tags.length > 0) {
+                g.addNode(i.Id, { label: [i.Id.substr(0, maxLength)].concat(tags).join("\n"), style: 'fill: paleturquoise'});
+            } else {
+                g.addNode(i.Id, { label: i.Id.substr(0, maxLength)});
+            }
+        });
+
+        d.forEach(function addEdges(i) {
+            if (i.ParentId && g.hasNode(i.ParentId)) {
+              g.addEdge(null, i.ParentId, i.Id);
+            } else if (i.ParentId) {
+              console.log(i.ParentId, "Defined parent, but not in graph");
+            }
+        });
+
+        //Remove anything unrelated to the current image
+        var lineage = [$routeParams.id], parent = [];
+
+        do {
+          parent = g.predecessors(lineage[lineage.length - 1]);
+          lineage = lineage.concat(parent);
+        } while (parent.length > 0);
+
+        g = g.filterNodes(function filterUnrelated(u) {
+          return (lineage.indexOf(u) > -1 || $routeParams.id === u);
+        });
+
+        var layout = renderer.run(g, d3.select("svg g"));
+        d3.select('svg')
+          .attr("width", layout.graph().width + 40)
+          .attr("height", layout.graph().height + 40);
+    });
+
 
     $scope.getHistory();
 }
