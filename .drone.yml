@@ -1,0 +1,12 @@
+image: registry.docker/golang
+volumes:
+  - /var/run/docker.sock
+script:
+  - apt-get update && apt-get -y  install npm nodejs
+  - make install
+  - nodejs $(which grunt) build
+  - go build
+  - docker build -t registry.docker/dockerui/dockerui:$DRONE_COMMIT .
+  - docker tag -f registry.docker/dockerui/dockerui:$DRONE_COMMIT registry.docker/dockerui/dockerui:latest
+  - docker push registry.docker/dockerui/dockerui:$DRONE_COMMIT
+  - docker push registry.docker/dockerui/dockerui:latest
