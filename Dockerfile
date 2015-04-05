@@ -1,4 +1,4 @@
-FROM scratch
+FROM gliderlabs/alpine:3.1
 
 COPY dockerui /
 COPY dist /
