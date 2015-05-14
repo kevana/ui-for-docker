@@ -56,7 +56,7 @@ angular.module('dockerui.services', ['ngResource'])
     .factory('Image', function ($resource, Settings) {
         'use strict';
         // Resource for docker images
-        // http://docs.docker.io/en/latest/api/docker_remote_api.html#images
+        // https://docs.docker.com/reference/api/docker_remote_api_v1.12/#22-images
         return $resource(Settings.url + '/images/:id/:action', {}, {
             query: {method: 'GET', params: {all: 0, action: 'json'}, isArray: true},
             get: {method: 'GET', params: {action: 'json'}},
@@ -72,7 +72,7 @@ angular.module('dockerui.services', ['ngResource'])
     .factory('Docker', function ($resource, Settings) {
         'use strict';
         // Information for docker
-        // http://docs.docker.io/en/latest/api/docker_remote_api.html#display-system-wide-information
+        // https://docs.docker.com/reference/api/docker_remote_api_v1.12/#display-system-wide-information
         return $resource(Settings.url + '/version', {}, {
             get: {method: 'GET'}
         });
@@ -80,7 +80,7 @@ angular.module('dockerui.services', ['ngResource'])
     .factory('Auth', function ($resource, Settings) {
         'use strict';
         // Auto Information for docker
-        // http://docs.docker.io/en/latest/api/docker_remote_api.html#set-auth-configuration
+        // https://docs.docker.com/reference/api/docker_remote_api_v1.12/#check-auth-configuration
         return $resource(Settings.url + '/auth', {}, {
             get: {method: 'GET'},
             update: {method: 'POST'}
@@ -89,7 +89,7 @@ angular.module('dockerui.services', ['ngResource'])
     .factory('System', function ($resource, Settings) {
         'use strict';
         // System for docker
-        // http://docs.docker.io/en/latest/api/docker_remote_api.html#display-system-wide-information
+        // https://docs.docker.com/reference/api/docker_remote_api_v1.12/#display-system-wide-information
         return $resource(Settings.url + '/info', {}, {
             get: {method: 'GET'}
         });
