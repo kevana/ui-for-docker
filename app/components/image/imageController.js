@@ -48,10 +48,10 @@ function($scope, $q, $routeParams, $location, Image, Container, Messages, LineCh
 
     Image.get({id: $routeParams.id}, function(d) {
         $scope.image = d;
-        $scope.tag = d.id;
+        $scope.tag = {repo: $routeParams.id, force: false}
         var t = $routeParams.tag;
         if (t && t !== ":") {
-            $scope.tag = t;
+            $scope.tag = {repo: t, force: false};
             var promise = getContainersFromImage($q, Container, t);
 
             promise.then(function(containers) {
