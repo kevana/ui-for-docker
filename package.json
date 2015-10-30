@@ -32,6 +32,7 @@
     "grunt-html2js": "~0.1.0",
     "grunt-if": "^0.1.5",
     "grunt-karma": "~0.4.4",
+    "grunt-patch": "~0.1.7",
     "grunt-recess": "~0.3",
     "grunt-shell": "^1.1.2"
   },

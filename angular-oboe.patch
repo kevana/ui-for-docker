@@ -1,0 +1,12 @@
+diff --git "a/angular-oboe.js" "b/angular-oboe.js"
+index 49a33db..81a1077 100644
+--- "a/angular-oboe.js"
++++ "b/angular-oboe.js"
+@@ -30,6 +30,7 @@ angular.module('ngOboe', []).service('Oboe', [
+               params.done();
+             }
+             // resolve the promise
++            if (false) // workaround Docker's JSON streams
+             defer.resolve();
+             // make sure oboe cleans up memory
+             return oboe.drop;
