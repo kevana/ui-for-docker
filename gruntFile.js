@@ -11,10 +11,11 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-html2js');
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-if');
+    grunt.loadNpmTasks('grunt-patch');
 
     // Default task.
     grunt.registerTask('default', ['jshint', 'build', 'karma:unit']);
-    grunt.registerTask('build', ['clean:app', 'if:binaryNotExist', 'html2js', 'concat', 'clean:tmpl', 'recess:build', 'copy']);
+    grunt.registerTask('build', ['clean:app', 'patch', 'if:binaryNotExist', 'html2js', 'concat', 'clean:tmpl', 'recess:build', 'copy']);
     grunt.registerTask('release', ['clean:all', 'if:binaryNotExist', 'html2js', 'uglify', 'clean:tmpl', 'jshint', 'karma:unit', 'concat:index', 'recess:min', 'copy']);
     grunt.registerTask('test-watch', ['karma:watch']);
     grunt.registerTask('run', ['if:binaryNotExist', 'build', 'shell:buildImage', 'shell:run']);
@@ -251,6 +252,16 @@ module.exports = function (grunt) {
                 },
                 ifFalse: ['shell:buildBinary']
             }
+        },
+        patch: {
+          myPatchTask: {
+            options: {
+              patch: 'angular-oboe.patch'
+            },
+            files: {
+              'bower_components/angular-oboe/dist/angular-oboe.js': 'bower_components/angular-oboe/dist/angular-oboe.js'
+            }
+          }
         }
     });
 };
