@@ -29,7 +29,7 @@ module.exports = function (grunt) {
         'html2js',
         'uglify',
         'clean:tmpl',
-        //'jshint',
+        'jshint',
         //'karma:unit',
         'concat:index',
         'recess:min',
