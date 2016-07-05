@@ -85,7 +85,7 @@
     <div class="well well-large">
         <ul>
             <li ng-repeat="change in history">
-                <strong>{{ change.Id }}</strong>: Created: {{ change.Created|getdate }} Created by: {{ change.CreatedBy
+                <strong>{{ change.Id }}</strong>: Created: {{ change.Created | date: 'yyyy-MM-dd' }} Created by: {{ change.CreatedBy
                 }}
             </li>
         </ul>
