@@ -61,9 +61,6 @@
                     <span ng-show="sortType == 'Status' && sortReverse" class="glyphicon glyphicon-chevron-up"></span>
                 </a>
             </th>
-            <th>
-                Log
-            </th>
         </tr>
     </thead>
     <tbody>
@@ -74,7 +71,6 @@
             <td>{{ container.Command|truncate:40 }}</td>
             <td>{{ container.Created | date: 'yyyy-MM-dd' }}</td>
             <td><span class="label label-{{ container.Status|statusbadge }}">{{ container.Status }}</span></td>
-            <td><a href="#/containers/{{ container.Id }}/logs">stdout/stderr</a></td>
         </tr>
     </tbody>
 </table>
