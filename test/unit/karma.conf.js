@@ -7,7 +7,7 @@ files = [
     JASMINE_ADAPTER,
     'dist/angular.js',
     'dist/vendor.js',
-    'dist/dockerui.js',
+    'dist/uifordocker.js',
     'bower_components/angular-mocks/angular-mocks.js',
     'test/unit/**/*.spec.js'
 ];

@@ -1,7 +1,7 @@
 describe("ContainerTopController", function () {
     var $scope, $httpBackend, $routeParams;
 
-    beforeEach(angular.mock.module('dockerui'));
+    beforeEach(angular.mock.module('uifordocker'));
 
     beforeEach(inject(function (_$rootScope_, _$httpBackend_, $controller, _$routeParams_) {
         $scope = _$rootScope_.$new();
