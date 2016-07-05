@@ -96,14 +96,6 @@ angular.module('dockerui.filters', [])
             return '';
         };
     })
-    .filter('getdate', function () {
-        'use strict';
-        return function (data) {
-            //Multiply by 1000 for the unix format
-            var date = new Date(data * 1000);
-            return date.toDateString();
-        };
-    })
     .filter('errorMsg', function () {
         return function (object) {
             var idx = 0;
