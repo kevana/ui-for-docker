@@ -58,7 +58,7 @@
             <td><a href="#/images/{{ image.Id }}/?tag={{ image|repotag }}">{{ image.Id|truncate:20}}</a></td>
             <td>{{ image|repotag }}</td>
             <td>{{ image.VirtualSize|humansize }}</td>
-            <td>{{ image.Created | date: 'yyyy-MM-dd' }}</td>
+            <td>{{ image.Created * 1000 | date: 'yyyy-MM-dd' }}</td>
         </tr>
     </tbody>
 </table>
