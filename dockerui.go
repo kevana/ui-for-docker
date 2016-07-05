@@ -20,7 +20,7 @@ var (
 	endpoint = flag.String("e", "/var/run/docker.sock", "Dockerd endpoint")
 	addr     = flag.String("p", ":9000", "Address and port to serve UI For Docker")
 	assets   = flag.String("a", ".", "Path to the assets")
-	data		 = flag.String("d", ".", "Path to the data")
+	data     = flag.String("d", ".", "Path to the data")
 	authKey  []byte
 	authKeyFile = "authKey.dat"
 )
