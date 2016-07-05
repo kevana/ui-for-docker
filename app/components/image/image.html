@@ -34,7 +34,7 @@
         </tr>
         <tr>
             <td>Created:</td>
-            <td>{{ image.Created | date: 'medium'}}</td>
+            <td>{{ image.Created | date: 'yyyy-MM-dd HH:mm:ss'}}</td>
         </tr>
         <tr>
             <td>Parent:</td>
@@ -85,7 +85,7 @@
     <div class="well well-large">
         <ul>
             <li ng-repeat="change in history">
-                <strong>{{ change.Id }}</strong>: Created: {{ change.Created|getdate }} Created by: {{ change.CreatedBy
+                <strong>{{ change.Id }}</strong>: Created: {{ change.Created | date: 'yyyy-MM-dd' }} Created by: {{ change.CreatedBy
                 }}
             </li>
         </ul>

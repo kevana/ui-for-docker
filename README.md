@@ -1,5 +1,7 @@
 ## UI For Docker
 
+[![Join the chat at https://gitter.im/kevana/ui-for-docker](https://badges.gitter.im/kevana/ui-for-docker.svg)](https://gitter.im/kevana/ui-for-docker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ![Containers](/containers.png)
 UI For Docker is a web interface for the Docker Remote API.  The goal is to provide a pure client side implementation so it is effortless to connect and manage docker.
 
