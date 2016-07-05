@@ -258,14 +258,14 @@ module.exports = function (grunt) {
                 command: [
                     'docker stop ui-for-docker',
                     'docker rm ui-for-docker',
-                    'docker run --privileged -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock --name ui-for-docker ui-for-docker'
+                    'docker run --privileged -d -p 9000:9000 -v /tmp/ui-for-docker:/data -v /var/run/docker.sock:/var/run/docker.sock --name ui-for-docker ui-for-docker -d /data'
                 ].join(';')
             },
             runSwarm: {
                 command: [
                     'docker stop ui-for-docker',
                     'docker rm ui-for-docker',
-                    'docker run --net=host -d --name ui-for-docker ui-for-docker -e http://127.0.0.1:2374'
+                    'docker run --net=host -d -v /tmp/ui-for-docker:/data --name ui-for-docker ui-for-docker -d /data -e http://127.0.0.1:2374'
                 ].join(';')
             },
             cleanImages: {

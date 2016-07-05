@@ -20,6 +20,7 @@ var (
 	endpoint = flag.String("e", "/var/run/docker.sock", "Dockerd endpoint")
 	addr     = flag.String("p", ":9000", "Address and port to serve UI For Docker")
 	assets   = flag.String("a", ".", "Path to the assets")
+	data     = flag.String("d", ".", "Path to the data")
 	authKey  []byte
 	authKeyFile = "authKey.dat"
 )
@@ -72,7 +73,7 @@ func createUnixHandler(e string) http.Handler {
 	return &UnixHandler{e}
 }
 
-func createHandler(dir string, e string) http.Handler {
+func createHandler(dir string, d string, e string) http.Handler {
 	var (
 		mux         = http.NewServeMux()
 		fileHandler = http.FileServer(http.Dir(dir))
@@ -92,11 +93,12 @@ func createHandler(dir string, e string) http.Handler {
 	}
 
 	// Use existing csrf authKey if present or generate a new one.
-	dat, err := ioutil.ReadFile(authKeyFile)
+	var authKeyPath = d + "/" + authKeyFile
+	dat, err := ioutil.ReadFile(authKeyPath)
 	if err != nil {
 		fmt.Println(err)
 		authKey = securecookie.GenerateRandomKey(32)
-		err := ioutil.WriteFile(authKeyFile, authKey, 0644)
+		err := ioutil.WriteFile(authKeyPath, authKey, 0644)
 		if err != nil {
 			fmt.Println("unable to persist auth key", err)
 		}
@@ -125,7 +127,7 @@ func csrfWrapper(h http.Handler) http.Handler {
 func main() {
 	flag.Parse()
 
-	handler := createHandler(*assets, *endpoint)
+	handler := createHandler(*assets, *data, *endpoint)
 	if err := http.ListenAndServe(*addr, handler); err != nil {
 		log.Fatal(err)
 	}
