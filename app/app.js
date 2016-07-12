@@ -1,8 +1,8 @@
 angular.module('uifordocker', [
     'uifordocker.templates',
     'ngRoute',
-    'dockerui.services',
-    'dockerui.filters',
+    'uifordocker.services',
+    'uifordocker.filters',
     'masthead',
     'footer',
     'dashboard',

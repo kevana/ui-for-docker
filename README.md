@@ -19,7 +19,7 @@ UI For Docker is a web interface for the Docker Remote API.  The goal is to prov
 
 
 
-Bind mounting the Unix socket into the UI For Docker container is much more secure than exposing your docker daemon over TCP. The `--privileged` flag is required for hosts using SELinux. You should still secure your UI For Docker instance behind some type of auth. Directions for using Nginx auth are [here](https://github.com/kevana/ui-for-docker/wiki/Dockerui-with-Nginx-HTTP-Auth).
+Bind mounting the Unix socket into the UI For Docker container is much more secure than exposing your docker daemon over TCP. The `--privileged` flag is required for hosts using SELinux. You should still secure your UI For Docker instance behind some type of auth. Directions for using Nginx auth are [here](https://github.com/kevana/ui-for-docker/wiki/UI-for-Docker-with-Nginx-HTTP-Auth).
 
 ### Specify socket to connect to Docker daemon
 
