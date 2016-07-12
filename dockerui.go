@@ -14,6 +14,8 @@ import (
 	"io/ioutil"
 	"fmt"
 	"github.com/gorilla/securecookie"
+	"crypto/tls"
+	"crypto/x509"
 )
 
 var (
@@ -21,6 +23,7 @@ var (
 	addr     = flag.String("p", ":9000", "Address and port to serve UI For Docker")
 	assets   = flag.String("a", ".", "Path to the assets")
 	data     = flag.String("d", ".", "Path to the data")
+	certs    = flag.String("c", "/certs", "Path to the certs")
 	authKey  []byte
 	authKeyFile = "authKey.dat"
 )
@@ -69,18 +72,51 @@ func createTcpHandler(e string) http.Handler {
 	return httputil.NewSingleHostReverseProxy(u)
 }
 
+func createTlsConfig(c string) *tls.Config {
+	cert, err := tls.LoadX509KeyPair(c + "/" + "cert.pem", c + "/" + "key.pem")
+	if err != nil {
+		log.Fatal(err)
+	}
+	caCert, err := ioutil.ReadFile(c + "/" + "ca.pem")
+	if err != nil {
+		log.Fatal(err)
+	}
+	caCertPool := x509.NewCertPool()
+	caCertPool.AppendCertsFromPEM(caCert)
+	tlsConfig := &tls.Config{
+		Certificates: []tls.Certificate{cert},
+		RootCAs:      caCertPool,
+	}
+	return tlsConfig;
+}
+
+func createTcpHandlerWithTLS(e string, c string) http.Handler {
+	u, err := url.Parse(e)
+	if err != nil {
+		log.Fatal(err)
+	}
+	var tlsConfig = createTlsConfig(c)
+	proxy := httputil.NewSingleHostReverseProxy(u)
+	proxy.Transport = &http.Transport{
+		TLSClientConfig: tlsConfig,
+	}
+	return proxy;
+}
+
 func createUnixHandler(e string) http.Handler {
 	return &UnixHandler{e}
 }
 
-func createHandler(dir string, d string, e string) http.Handler {
+func createHandler(dir string, d string, c string, e string) http.Handler {
 	var (
 		mux         = http.NewServeMux()
 		fileHandler = http.FileServer(http.Dir(dir))
 		h           http.Handler
 	)
 
-	if strings.Contains(e, "http") {
+	if strings.Contains(e, "https") {
+		h = createTcpHandlerWithTLS(e, c)
+	} else if strings.Contains(e, "http") {
 		h = createTcpHandler(e)
 	} else {
 		if _, err := os.Stat(e); err != nil {
@@ -127,7 +163,7 @@ func csrfWrapper(h http.Handler) http.Handler {
 func main() {
 	flag.Parse()
 
-	handler := createHandler(*assets, *data, *endpoint)
+	handler := createHandler(*assets, *data, *certs, *endpoint)
 	if err := http.ListenAndServe(*addr, handler); err != nil {
 		log.Fatal(err)
 	}
