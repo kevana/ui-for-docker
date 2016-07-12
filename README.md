@@ -44,7 +44,7 @@ These files will need to be named `ca.pem`, `cert.pem` and `key.pem` respectivel
 
 ```
 # Note the access to the endpoint via https
-$ docker run -d -p 9000:9000 cloudinovasi/cloudinovasi-ui -v /path/to/certs:/certs -e https://my-docker-host.domain:2376
+$ docker run -d -p 9000:9000 uifd/ui-for-docker -v /path/to/certs:/certs -e https://my-docker-host.domain:2376
 ```
 
 *Note*: Replace `/path/to/certs` to the path to the certificate files on your disk.
