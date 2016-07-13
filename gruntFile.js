@@ -265,7 +265,7 @@ module.exports = function (grunt) {
                 command: [
                     'docker stop ui-for-docker',
                     'docker rm ui-for-docker',
-                    'docker run --net=host -d -v /tmp/ui-for-docker:/data --name ui-for-docker ui-for-docker -d /data -e http://127.0.0.1:2374'
+                    'docker run --net=host -d -v /tmp/ui-for-docker:/data --name ui-for-docker ui-for-docker -d /data -H tcp://127.0.0.1:2374'
                 ].join(';')
             },
             cleanImages: {
