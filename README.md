@@ -25,10 +25,10 @@ Bind mounting the Unix socket into the UI For Docker container is much more secu
 
 By default UI For Docker connects to the Docker daemon with`/var/run/docker.sock`. For this to work you need to bind mount the unix socket into the container with `-v /var/run/docker.sock:/var/run/docker.sock`.
 
-You can use the `-e` flag to change this socket:
+You can use the `-H` flag to change this socket:
 
     # Connect to a tcp socket:
-    $ docker run -d -p 9000:9000 --privileged uifd/ui-for-docker -e http://127.0.0.1:2375
+    $ docker run -d -p 9000:9000 --privileged uifd/ui-for-docker -H tcp://127.0.0.1:2375
 
 ### Change address/port UI For Docker is served on
 UI For Docker listens on port 9000 by default. If you run UI For Docker inside a container then you can bind the container's internal port to any external address and port:
@@ -38,13 +38,18 @@ UI For Docker listens on port 9000 by default. If you run UI For Docker inside a
 
 ### Access a Docker engine protected via TLS
 
-Ensure that you have access to the CA, the cert and the public key used to access your Docker engine.  
+Ensure that you have access to the CA, the TLS certificate and the TLS key used to access your Docker engine.  
 
 These files will need to be named `ca.pem`, `cert.pem` and `key.pem` respectively. Store them somewhere on your disk and mount a volume containing these files inside the UI container:
 
 ```
-# Note the access to the endpoint via https
-$ docker run -d -p 9000:9000 uifd/ui-for-docker -v /path/to/certs:/certs -e https://my-docker-host.domain:2376
+$ docker run -d -p 9000:9000 uifd/ui-for-docker -v /path/to/certs:/certs -H tcp://my-docker-host.domain:2376 -tlsverify
+```
+
+If you want to specify different names for the CA, certificate and public key respectively you can use the `-tlscacert`, `-tlscert` and `-tlskey`:
+
+```
+$ docker run -d -p 9000:9000 uifd/ui-for-docker -v /path/to/certs:/certs -H tcp://my-docker-host.domain:2376 -tlsverify -tlscacert /certs/myCA.pem -tlscert /certs/myCert.pem -tlskey /certs/myKey.pem
 ```
 
 *Note*: Replace `/path/to/certs` to the path to the certificate files on your disk.

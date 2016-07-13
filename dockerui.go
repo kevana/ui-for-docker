@@ -9,7 +9,6 @@ import (
 	"net/http/httputil"
 	"net/url"
 	"os"
-	"strings"
 	"github.com/gorilla/csrf"
 	"io/ioutil"
 	"fmt"
@@ -19,17 +18,27 @@ import (
 )
 
 var (
-	endpoint = flag.String("e", "/var/run/docker.sock", "Dockerd endpoint")
-	addr     = flag.String("p", ":9000", "Address and port to serve UI For Docker")
-	assets   = flag.String("a", ".", "Path to the assets")
-	data     = flag.String("d", ".", "Path to the data")
-	certs    = flag.String("c", "/certs", "Path to the certs")
+	endpoint 	= flag.String("H", "unix:///var/run/docker.sock", "Dockerd endpoint")
+	addr     	= flag.String("p", ":9000", "Address and port to serve UI For Docker")
+	assets   	= flag.String("a", ".", "Path to the assets")
+	data     	= flag.String("d", ".", "Path to the data")
+	tlsverify = flag.Bool("tlsverify", false, "TLS support")
+	tlscacert = flag.String("tlscacert", "/certs/ca.pem", "Path to the CA")
+	tlscert   = flag.String("tlscert", "/certs/cert.pem", "Path to the TLS certificate file")
+	tlskey    = flag.String("tlskey", "/certs/key.pem", "Path to the TLS key")
 	authKey  []byte
 	authKeyFile = "authKey.dat"
 )
 
 type UnixHandler struct {
 	path string
+}
+
+type TLSFlags struct {
+	tls bool
+	caPath string
+	certPath string
+	keyPath string
 }
 
 func (h *UnixHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -64,20 +73,12 @@ func copyHeader(dst, src http.Header) {
 	}
 }
 
-func createTcpHandler(e string) http.Handler {
-	u, err := url.Parse(e)
+func createTLSConfig(flags TLSFlags) *tls.Config {
+	cert, err := tls.LoadX509KeyPair(flags.certPath, flags.keyPath)
 	if err != nil {
 		log.Fatal(err)
 	}
-	return httputil.NewSingleHostReverseProxy(u)
-}
-
-func createTlsConfig(c string) *tls.Config {
-	cert, err := tls.LoadX509KeyPair(c + "/" + "cert.pem", c + "/" + "key.pem")
-	if err != nil {
-		log.Fatal(err)
-	}
-	caCert, err := ioutil.ReadFile(c + "/" + "ca.pem")
+	caCert, err := ioutil.ReadFile(flags.caPath)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -90,12 +91,14 @@ func createTlsConfig(c string) *tls.Config {
 	return tlsConfig;
 }
 
-func createTcpHandlerWithTLS(e string, c string) http.Handler {
-	u, err := url.Parse(e)
-	if err != nil {
-		log.Fatal(err)
-	}
-	var tlsConfig = createTlsConfig(c)
+func createTcpHandler(u *url.URL) http.Handler {
+	u.Scheme = "http";
+	return httputil.NewSingleHostReverseProxy(u)
+}
+
+func createTcpHandlerWithTLS(u *url.URL, flags TLSFlags) http.Handler {
+	u.Scheme = "https";
+	var tlsConfig = createTLSConfig(flags)
 	proxy := httputil.NewSingleHostReverseProxy(u)
 	proxy.Transport = &http.Transport{
 		TLSClientConfig: tlsConfig,
@@ -107,25 +110,35 @@ func createUnixHandler(e string) http.Handler {
 	return &UnixHandler{e}
 }
 
-func createHandler(dir string, d string, c string, e string) http.Handler {
+func createHandler(dir string, d string, e string, flags TLSFlags) http.Handler {
 	var (
 		mux         = http.NewServeMux()
 		fileHandler = http.FileServer(http.Dir(dir))
 		h           http.Handler
 	)
 
-	if strings.Contains(e, "https") {
-		h = createTcpHandlerWithTLS(e, c)
-	} else if strings.Contains(e, "http") {
-		h = createTcpHandler(e)
-	} else {
-		if _, err := os.Stat(e); err != nil {
+	u, perr := url.Parse(e)
+	if perr != nil {
+		log.Fatal(perr)
+	}
+
+	if u.Scheme == "tcp" {
+		if flags.tls {
+			h = createTcpHandlerWithTLS(u, flags)
+		} else {
+			h = createTcpHandler(u)
+		}
+	} else if u.Scheme == "unix" {
+		var socketPath = u.Path
+		if _, err := os.Stat(socketPath); err != nil {
 			if os.IsNotExist(err) {
-				log.Fatalf("unix socket %s does not exist", e)
+				log.Fatalf("unix socket %s does not exist", socketPath)
 			}
 			log.Fatal(err)
 		}
-		h = createUnixHandler(e)
+		h = createUnixHandler(socketPath)
+	} else {
+		log.Fatalf("Bad Docker enpoint: %s. Only unix:// and tcp:// are supported.", e)
 	}
 
 	// Use existing csrf authKey if present or generate a new one.
@@ -163,7 +176,14 @@ func csrfWrapper(h http.Handler) http.Handler {
 func main() {
 	flag.Parse()
 
-	handler := createHandler(*assets, *data, *certs, *endpoint)
+	tlsFlags := TLSFlags{
+		tls: *tlsverify,
+		caPath: *tlscacert,
+		certPath: *tlscert,
+		keyPath: *tlskey,
+	}
+
+	handler := createHandler(*assets, *data, *endpoint, tlsFlags)
 	if err := http.ListenAndServe(*addr, handler); err != nil {
 		log.Fatal(err)
 	}
