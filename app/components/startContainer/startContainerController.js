@@ -125,19 +125,10 @@ angular.module('startContainer', ['ui.bootstrap'])
                 var s = $scope;
                 Container.create(config, function (d) {
                     if (d.Id) {
-                        var reqBody = config.HostConfig || {};
-                        reqBody.id = d.Id;
-                        ctor.start(reqBody, function (cd) {
-                            if (cd.id) {
-                                Messages.send('Container Started', d.Id);
-                                $('#create-modal').modal('hide');
-                                loc.path('/containers/' + d.Id + '/');
-                            } else {
-                                failedRequestHandler(cd, Messages);
-                                ctor.remove({id: d.Id}, function () {
-                                    Messages.send('Container Removed', d.Id);
-                                });
-                            }
+                        ctor.start({id: d.Id}, {}, function (cd) {
+                            Messages.send('Container Started', d.Id);
+                            $('#create-modal').modal('hide');
+                            loc.path('/containers/' + d.Id + '/');
                         }, function (e) {
                             failedRequestHandler(e, Messages);
                         });

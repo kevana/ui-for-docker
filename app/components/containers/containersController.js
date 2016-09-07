@@ -37,7 +37,7 @@ angular.module('containers', [])
                             Container.get({id: c.Id}, function (d) {
                                 c = d;
                                 counter = counter + 1;
-                                action({id: c.Id, HostConfig: c.HostConfig || {}}, function (d) {
+                                action({id: c.Id}, {}, function (d) {
                                     Messages.send("Container " + msg, c.Id);
                                     var index = $scope.containers.indexOf(c);
                                     complete();
