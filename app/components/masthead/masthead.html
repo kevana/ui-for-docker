@@ -1,21 +1,32 @@
-<div class="masthead">
-    <h3 class="text-muted">UI For Docker</h3>
-
-    <div class="col-xs-11">
-        <ul class="nav well">
-            <li><a href="#/">Dashboard</a></li>
-            <li><a href="#/containers/">Containers</a></li>
-            <li><a href="#/containers_network/">Containers Network</a></li>
-            <li><a href="#/images/">Images</a></li>
-            <li ng-if="showNetworksVolumes"><a href="#/networks/">Networks</a></li>
-            <li ng-if="showNetworksVolumes"><a href="#/volumes/">Volumes</a></li>
-            <li><a href="#/info/">Info</a></li>
-        </ul>
-    </div>
-    <div class="col-xs-1">
-        <button class="btn btn-primary" ng-click="refresh()">
-            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
-            Refresh
-        </button>
+<div class="row">
+    <div class="col-xs-12">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/#/">
+                        <img src="ico/apple-touch-icon-precomposed.png">
+                        UI For Docker
+                    </a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#/">Dashboard</a></li>
+                        <li><a href="#/containers/">Containers</a></li>
+                        <li><a href="#/containers_network/">Containers Network</a></li>
+                        <li><a href="#/images/">Images</a></li>
+                        <li ng-if="showNetworksVolumes"><a href="#/networks/">Networks</a></li>
+                        <li ng-if="showNetworksVolumes"><a href="#/volumes/">Volumes</a></li>
+                        <li><a href="#/info/">Info</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <div class="navbar-btn">
+                                <a class="btn btn-primary" ng-click="refresh()"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>Refresh</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </div>
 </div>

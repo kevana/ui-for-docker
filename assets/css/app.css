@@ -114,3 +114,8 @@
     cursor: pointer;
 }
 
+.navbar-brand > img {
+    max-height: 100%; 
+    float: left;
+    margin-right: 6px;
+}
