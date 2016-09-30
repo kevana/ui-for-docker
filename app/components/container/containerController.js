@@ -78,8 +78,7 @@
                 ViewSpinner.spin();
                 Container.start({
                     id: $scope.container.Id,
-                    HostConfig: $scope.container.HostConfig
-                }, function (d) {
+                }, {}, function (d) {
                     update();
                     Messages.send("Container started", $routeParams.id);
                 }, function (e) {
@@ -309,4 +308,3 @@
             update();
             $scope.getChanges();
         }]);
-
