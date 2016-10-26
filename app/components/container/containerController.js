@@ -77,7 +77,7 @@
             $scope.start = function () {
                 ViewSpinner.spin();
                 Container.start({
-                    id: $scope.container.Id,
+                    id: $scope.container.Id
                 }, {}, function (d) {
                     update();
                     Messages.send("Container started", $routeParams.id);
