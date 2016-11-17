@@ -33,12 +33,15 @@ angular.module('dashboard', [])
             var running = 0;
             var ghost = 0;
             var stopped = 0;
+            var created = 0;
 
             for (var i = 0; i < d.length; i++) {
                 var item = d[i];
 
                 if (item.Status === "Ghost") {
                     ghost += 1;
+                } else if (item.Status === "Created") {
+                    created += 1;
                 } else if (item.Status.indexOf('Exit') !== -1) {
                     stopped += 1;
                 } else {
@@ -51,6 +54,11 @@ angular.module('dashboard', [])
 
             var c = new Chart($('#containers-chart').get(0).getContext("2d"));
             var data = [
+                {
+                    value: created,
+                    color: '#000000',
+                    title: 'Created'
+                },
                 {
                     value: running,
                     color: '#5bb75b',
