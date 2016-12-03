@@ -1,5 +1,8 @@
 ## UI For Docker
 
+>This repo is deprecated. Development continues at Portainer: [github.com/portainer/portainer](https://github.com/portainer/portainer)
+
+
 [![Join the chat at https://gitter.im/kevana/ui-for-docker](https://badges.gitter.im/kevana/ui-for-docker.svg)](https://gitter.im/kevana/ui-for-docker?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ![Containers](/containers.png)
