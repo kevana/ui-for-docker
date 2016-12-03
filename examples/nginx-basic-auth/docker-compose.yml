@@ -1,12 +1,15 @@
-dockerui:
-  image: dockerui/dockerui
-  privileged: true
-  volumes:
-   - /var/run/docker.sock:/var/run/docker.sock
+version: '2'
+services:
+  uifd:
+    image: uifd/ui-for-docker
+    privileged: true
+    restart: always
+    volumes:
+     - /var/run/docker.sock:/var/run/docker.sock
 
-nginx:
-  build: .
-  links:
-   - dockerui
-  ports:
-   - 80:80
+  nginx:
+    build: .
+    links:
+     - uifd
+    ports:
+     - 9999:80
