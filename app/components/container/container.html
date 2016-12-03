@@ -183,7 +183,7 @@
         </tr>
         <tr>
             <td>IPAddress:</td>
-            <td>{{ container.NetworkSettings.IPAddress }}</td>
+            <td><span ng-if='container.NetworkSettings.IPAddress'>{{ container.NetworkSettings.IPAddress }} </span><span ng-if='!container.NetworkSettings.IPAddress' ng-repeat='(key,obj) in container.NetworkSettings.Networks'>{{ key + ":" + obj.IPAddress }} </span></td>
         </tr>
         <tr>
             <td>Cmd:</td>
