@@ -58,7 +58,7 @@ angular.module('stats', [])
             {
                 //value: '',
                 color: 'rgba(255,180,174,0.5)',
-                title: 'Rx Data'
+                title: 'Tx Data'
             }];
         legend($('#network-legend').get(0), networkLegendData);
 
